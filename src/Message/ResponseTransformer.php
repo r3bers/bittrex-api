@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Codenixsv\BittrexApi\Message;
+namespace R3bers\BittrexApi\Message;
 
-use Codenixsv\BittrexApi\Exception\TransformResponseException;
 use Psr\Http\Message\ResponseInterface;
+use R3bers\BittrexApi\Exception\TransformResponseException;
 
 /**
  * Class ResponseTransformer
- * @package Codenixsv\BittrexApi\Message
+ * @package R3bers\BittrexApi\Message
  */
 class ResponseTransformer
 {

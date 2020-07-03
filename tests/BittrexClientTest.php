@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Codenixsv\BittrexApi\Tests;
+namespace R3bers\BittrexApi\Tests;
 
-use Codenixsv\BittrexApi\Api\Account;
-use Codenixsv\BittrexApi\Api\Market;
-use Codenixsv\BittrexApi\Api\PublicApi;
-use Codenixsv\BittrexApi\BittrexClient;
-use Codenixsv\BittrexApi\Exception\InvalidCredentialException;
 use PHPUnit\Framework\TestCase;
+use R3bers\BittrexApi\Api\Account;
+use R3bers\BittrexApi\Api\Market;
+use R3bers\BittrexApi\Api\PublicApi;
+use R3bers\BittrexApi\BittrexClient;
+use R3bers\BittrexApi\Exception\InvalidCredentialException;
 
 class BittrexClientTest extends TestCase
 {

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Codenixsv\BittrexApi\Exception;
+namespace R3bers\BittrexApi\Exception;
 
 /**
  * Class TransformResponseException
- * @package Codenixsv\BittrexApi\Exception
+ * @package R3bers\BittrexApi\Exception
  */
 class TransformResponseException extends BittrexException
 {

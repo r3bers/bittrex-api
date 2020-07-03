@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Codenixsv\BittrexApi\Api;
+namespace R3bers\BittrexApi\Api;
 
-use Codenixsv\BittrexApi\Message\ResponseTransformer;
 use Exception;
 use GuzzleHttp\Client;
+use R3bers\BittrexApi\Message\ResponseTransformer;
 
 /**
  * Class Api
- * @package Codenixsv\BittrexApi\Api
+ * @package R3bers\BittrexApi\Api
  */
 class Api
 {
@@ -18,7 +18,7 @@ class Api
     protected $client;
 
     /** @var string */
-    private $version = 'v1.1';
+    private $version = 'v3';
 
     /** @var ResponseTransformer */
     protected $transformer;

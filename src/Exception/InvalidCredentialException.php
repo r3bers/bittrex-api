@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Codenixsv\BittrexApi\Exception;
+namespace R3bers\BittrexApi\Exception;
 
 use Exception;
 
 /**
  * Class InvalidCredentialException
- * @package Codenixsv\BittrexApi\Exception
+ * @package R3bers\BittrexApi\Exception
  */
 class InvalidCredentialException extends Exception
 {

@@ -1,18 +1,23 @@
 {
-    "name": "codenix-sv/bittrex-api",
+    "name": "r3bers/bittrex-api",
     "type": "library",
     "description": "PHP client for Bittrex API",
-    "homepage": "https://github.com/codenix-sv/bittrex-api",
+    "homepage": "https://github.com/r3bers/bittrex-api",
     "keywords": ["client", "api", "php", "bittrex", "rest", "bittrex-api", "exchange"],
     "license": "MIT",
     "support": {
-        "issues": "https://github.com/codenix-sv/bittrex-api/issues?state=open",
-        "source": "https://github.com/codenix-sv/bittrex-api"
+        "issues": "https://github.com/r3bers/bittrex-api/issues?state=open",
+        "source": "https://github.com/r3bers/bittrex-api"
     },
     "authors": [
         {
             "name": "Volodymyr Svyryd",
             "email": "codenix.sv@gmail.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Mikhail Solovev",
+            "email": "mike@solovjov.net",
             "role": "Developer"
         }
     ],

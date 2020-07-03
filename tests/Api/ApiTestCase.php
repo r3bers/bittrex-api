@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Codenixsv\BittrexApi\Tests\Api;
+namespace R3bers\BittrexApi\Tests\Api;
 
-use Codenixsv\BittrexApi\Middleware\Authentication;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
@@ -12,6 +11,7 @@ use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
+use R3bers\BittrexApi\Middleware\Authentication;
 
 class ApiTestCase extends TestCase
 {

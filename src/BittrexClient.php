@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Codenixsv\BittrexApi;
+namespace R3bers\BittrexApi;
 
-use Codenixsv\BittrexApi\Api\Account;
-use Codenixsv\BittrexApi\Api\Market;
-use Codenixsv\BittrexApi\Api\PublicApi;
-use Codenixsv\BittrexApi\Exception\InvalidCredentialException;
-use Codenixsv\BittrexApi\Middleware\Authentication;
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
+use R3bers\BittrexApi\Api\Account;
+use R3bers\BittrexApi\Api\Market;
+use R3bers\BittrexApi\Api\PublicApi;
+use R3bers\BittrexApi\Exception\InvalidCredentialException;
+use R3bers\BittrexApi\Middleware\Authentication;
 
 class BittrexClient
 {

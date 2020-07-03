@@ -32,6 +32,6 @@ after_script:
 notifications:
   email:
     recipients:
-      - codenix.sv@gmail.com
+      - mike@solovjov.net
     on_success: never
     on_failure: always

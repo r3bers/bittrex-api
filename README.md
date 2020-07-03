@@ -1,12 +1,13 @@
 # bittrex-api
-[![Build Status](https://travis-ci.com/codenix-sv/bittrex-api.svg?branch=master)](https://travis-ci.com/codenix-sv/bittrex-api)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/codenix-sv/bittrex-api/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/codenix-sv/bittrex-api/?branch=master)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/49b696439195269120b4/test_coverage)](https://codeclimate.com/github/codenix-sv/bittrex-api/test_coverage)
-[![Maintainability](https://api.codeclimate.com/v1/badges/49b696439195269120b4/maintainability)](https://codeclimate.com/github/codenix-sv/bittrex-api/maintainability)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/codenix-sv/bittrex-api/blob/master/LICENSE)
-![Packagist](https://img.shields.io/packagist/dt/codenix-sv/bittrex-api)
+[![Build Status](https://travis-ci.com/r3bers/bittrex-api.svg?branch=master)](https://travis-ci.com/r3bers/bittrex-api)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/r3bers/bittrex-api/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/r3bers/bittrex-api/?branch=master)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/e82ddd9ab3f2c47beb16/test_coverage)](https://codeclimate.com/github/r3bers/bittrex-api/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/e82ddd9ab3f2c47beb16/maintainability)](https://codeclimate.com/github/r3bers/bittrex-api/maintainability)
+[![GitHub license](https://img.shields.io/github/license/r3bers/bittrex-api)](https://github.com/r3bers/bittrex-api/blob/master/LICENSE)
+![Packagist](https://img.shields.io/packagist/dt/r3bers/bittrex-api)
 
-A simple PHP wrapper for [Bittrex API](https://bittrex.github.io/api/v1-1). Bittrex is the next generation crypto trading platform.
+
+A simple PHP wrapper for [Bittrex API v3](https://bittrex.github.io/api/v3). Bittrex is the next generation crypto trading platform.
 
 ## Requirements
 
@@ -21,21 +22,21 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```bash
-$ composer require codenix-sv/bittrex-api
+$ composer require r3bers/bittrex-api
 ```
 or add
 
 ```json
-"codenix-sv/bittrex-api" : "^1.0"
+"r3bers/bittrex-api" : "^1.0"
 ```
 
-to the require section of your application's `composer.json` file.
+to require the section of your application's `composer.json` file.
 
 ## Basic usage
 
 ### Example
 ```php
-use Codenixsv\BittrexApi\BittrexClient;
+use R3bers\BittrexApi\BittrexClient;
 
 $client = new BittrexClient();
 $client->setCredential('API_KEY', 'API_SECRET');
@@ -145,7 +146,7 @@ $data = $client->account()->getDepositHistory('BTC');
 ```
 
 ## Further Information
-Please, check the [Bittrex site](https://bittrex.github.io/api/v1-1) documentation for further
+Please, check the [Bittrex site](https://bittrex.github.io/api/v3) documentation for further
 information about API.
 
 ## License

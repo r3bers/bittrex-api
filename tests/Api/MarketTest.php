@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Codenixsv\BittrexApi\Tests\Api;
+namespace R3bers\BittrexApi\Tests\Api;
 
-use Codenixsv\BittrexApi\Api\Market;
+use R3bers\BittrexApi\Api\Market;
 
 class MarketTest extends ApiTestCase
 {

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Codenixsv\BittrexApi\Api;
+namespace R3bers\BittrexApi\Api;
 
 use Exception;
 
 /**
  * Class Market
- * @package Codenixsv\BittrexApi\Api
+ * @package R3bers\BittrexApi\Api
  */
 class Market extends Api
 {

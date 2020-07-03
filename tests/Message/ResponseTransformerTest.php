@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Codenixsv\BittrexApi\Tests\Message;
+namespace R3bers\BittrexApi\Tests\Message;
 
-use Codenixsv\BittrexApi\Exception\TransformResponseException;
-use Codenixsv\BittrexApi\Message\ResponseTransformer;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
+use R3bers\BittrexApi\Exception\TransformResponseException;
+use R3bers\BittrexApi\Message\ResponseTransformer;
 
 class ResponseTransformerTest extends TestCase
 {

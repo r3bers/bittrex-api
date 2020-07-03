@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Codenixsv\BittrexApi\Api;
+namespace R3bers\BittrexApi\Api;
 
 use Exception;
 
 /**
  * Class Account
- * @package Codenixsv\BittrexApi\Api
+ * @package R3bers\BittrexApi\Api
  */
 class Account extends Api
 {

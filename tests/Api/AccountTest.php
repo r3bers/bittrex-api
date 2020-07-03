@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Codenixsv\BittrexApi\Tests\Api;
+namespace R3bers\BittrexApi\Tests\Api;
 
-use Codenixsv\BittrexApi\Api\Account;
+use R3bers\BittrexApi\Api\Account;
 
 class AccountTest extends ApiTestCase
 {

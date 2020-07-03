@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Codenixsv\BittrexApi\Tests\Middleware;
+namespace R3bers\BittrexApi\Tests\Middleware;
 
-use Codenixsv\BittrexApi\Middleware\Authentication;
 use GuzzleHttp\Psr7\Request;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
+use R3bers\BittrexApi\Middleware\Authentication;
 
 class AuthenticationTest extends TestCase
 {

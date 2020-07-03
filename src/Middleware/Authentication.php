@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Codenixsv\BittrexApi\Middleware;
+namespace R3bers\BittrexApi\Middleware;
 
-use Psr\Http\Message\RequestInterface;
 use Closure;
+use Psr\Http\Message\RequestInterface;
 
 class Authentication
 {

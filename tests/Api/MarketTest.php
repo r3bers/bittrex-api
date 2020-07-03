@@ -14,7 +14,7 @@ class MarketTest extends ApiTestCase
         $request = $this->getLastRequest();
 
         $this->assertEquals(
-            '/api/v1.1/market/buylimit?market=USDT-BTC&quantity=1&rate=1&nonce=1585301777&apikey=API_KEY',
+            '/api/v3/market/buylimit?market=USDT-BTC&quantity=1&rate=1&nonce=1585301777&apikey=API_KEY',
             $request->getUri()->__toString()
         );
         $this->assertNotEmpty($request->getHeaderLine('apisign'));
@@ -26,7 +26,7 @@ class MarketTest extends ApiTestCase
         $request = $this->getLastRequest();
 
         $this->assertEquals(
-            '/api/v1.1/market/selllimit?market=BTC-LTC&quantity=1.2&rate=1.3&nonce=1585301777&apikey=API_KEY',
+            '/api/v3/market/selllimit?market=BTC-LTC&quantity=1.2&rate=1.3&nonce=1585301777&apikey=API_KEY',
             $request->getUri()->__toString()
         );
         $this->assertNotEmpty($request->getHeaderLine('apisign'));
@@ -38,7 +38,7 @@ class MarketTest extends ApiTestCase
         $request = $this->getLastRequest();
 
         $this->assertEquals(
-            '/api/v1.1/market/cancel?uuid=251c48e7-95d4-d53f-ad76-a7c6547b74ca9&nonce=1585301777&apikey=API_KEY',
+            '/api/v3/market/cancel?uuid=251c48e7-95d4-d53f-ad76-a7c6547b74ca9&nonce=1585301777&apikey=API_KEY',
             $request->getUri()->__toString()
         );
         $this->assertNotEmpty($request->getHeaderLine('apisign'));
@@ -50,7 +50,7 @@ class MarketTest extends ApiTestCase
 
         $request = $this->getLastRequest();
         $this->assertEquals(
-            '/api/v1.1/market/getopenorders?nonce=1585301777&apikey=API_KEY',
+            '/api/v3/market/getopenorders?nonce=1585301777&apikey=API_KEY',
             $request->getUri()->__toString()
         );
         $this->assertNotEmpty($request->getHeaderLine('apisign'));
@@ -62,7 +62,7 @@ class MarketTest extends ApiTestCase
 
         $request = $this->getLastRequest();
         $this->assertEquals(
-            '/api/v1.1/market/getopenorders?market=BTC-LTC&nonce=1585301777&apikey=API_KEY',
+            '/api/v3/market/getopenorders?market=BTC-LTC&nonce=1585301777&apikey=API_KEY',
             $request->getUri()->__toString()
         );
         $this->assertNotEmpty($request->getHeaderLine('apisign'));

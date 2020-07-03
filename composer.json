@@ -31,10 +31,10 @@
         "guzzlehttp/guzzle": "~6.0"
     },
     "autoload": {
-        "psr-4": { "Codenixsv\\BittrexApi\\": "src/" }
+        "psr-4": { "R3bers\\BittrexApi\\": "src/" }
     },
     "autoload-dev": {
-        "psr-4": { "Codenixsv\\BittrexApi\\Tests\\": "tests/"}
+        "psr-4": { "R3bers\\BittrexApi\\Tests\\": "tests/"}
     },
     "prefer-stable": true
 }

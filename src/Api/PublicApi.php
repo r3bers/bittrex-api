@@ -18,7 +18,7 @@ class PublicApi extends Api
      */
     public function getMarkets(): array
     {
-        return $this->get('/public/getmarkets');
+        return $this->get('/markets');
     }
 
     /**
@@ -27,7 +27,7 @@ class PublicApi extends Api
      */
     public function getCurrencies(): array
     {
-        return $this->get('/public/getcurrencies');
+        return $this->get('/currencies');
     }
 
     /**
@@ -37,9 +37,7 @@ class PublicApi extends Api
      */
     public function getTicker(string $market): array
     {
-        $parameters = ['market' => $market];
-
-        return $this->get('/public/getticker', $parameters);
+        return $this->get('/markets/' . $market . '/ticker');
     }
 
     /**
@@ -48,7 +46,7 @@ class PublicApi extends Api
      */
     public function getMarketSummaries(): array
     {
-        return $this->get('/public/getmarketsummaries');
+        return $this->get('/markets/summaries');
     }
 
     /**
@@ -58,22 +56,20 @@ class PublicApi extends Api
      */
     public function getMarketSummary(string $market): array
     {
-        $parameters = ['market' => $market];
-
-        return $this->get('/public/getmarketsummary', $parameters);
+        return $this->get('/markets/' . $market . '/summary');
     }
 
     /**
      * @param string $market
-     * @param string $type
+     * @param int $depth
      * @return array
      * @throws Exception
      */
-    public function getOrderBook(string $market, $type = 'both'): array
+    public function getOrderBook(string $market, $depth = 25): array
     {
-        $parameters = ['market' => $market, 'type' => $type];
+        $parameters = ['depth' => $depth];
 
-        return $this->get('/public/getorderbook', $parameters);
+        return $this->get('/markets/' . $market . '/orderbook', $parameters);
     }
 
     /**
@@ -83,8 +79,6 @@ class PublicApi extends Api
      */
     public function getMarketHistory(string $market)
     {
-        $parameters = ['market' => $market];
-
-        return $this->get('/public/getmarkethistory', $parameters);
+        return $this->get('/markets/' . $market . '/trades');
     }
 }

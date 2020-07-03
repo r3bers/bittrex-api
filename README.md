@@ -11,7 +11,7 @@ A simple PHP wrapper for [Bittrex API v3](https://bittrex.github.io/api/v3). Bit
 
 ## Requirements
 
-* PHP >= 7.2
+* PHP >= 7.3
 * ext-json
 * [Bittrex account](https://global.bittrex.com/), API key and API secret
 

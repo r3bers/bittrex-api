@@ -6,7 +6,6 @@
 [![GitHub license](https://img.shields.io/github/license/r3bers/bittrex-api)](https://github.com/r3bers/bittrex-api/blob/master/LICENSE)
 ![Packagist](https://img.shields.io/packagist/dt/r3bers/bittrex-api)
 
-
 A simple PHP wrapper for [Bittrex API v3](https://bittrex.github.io/api/v3). Bittrex is the next generation crypto trading platform.
 
 ## Requirements
@@ -151,4 +150,4 @@ information about API.
 
 ## License
 
-`codenix-sv/bittrex-api` is released under the MIT License. See the bundled [LICENSE](./LICENSE) for details.
+`r3bers/bittrex-api` is released under the MIT License. See the bundled [LICENSE](./LICENSE) for details.

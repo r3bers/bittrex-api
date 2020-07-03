@@ -16,12 +16,11 @@ class Api
 {
     /** @var Client */
     protected $client;
-
-    /** @var string */
-    private $version = 'v3';
-
     /** @var ResponseTransformer */
     protected $transformer;
+    /** @var string */
+    private $version = 'v3';
+    private $endpoint = '/api/';
 
     /**
      * Api constructor.
@@ -41,7 +40,35 @@ class Api
      */
     public function get(string $uri, array $query = []): array
     {
-        $response = $this->client->request('GET', '/api/' . $this->version
+        $response = $this->client->request('GET', $this->endpoint . $this->version
+            . $uri, ['query' => $query]);
+
+        return $this->transformer->transform($response);
+    }
+
+    /**
+     * @param string $uri
+     * @param array $query
+     * @return array
+     * @throws Exception
+     */
+    public function post(string $uri, array $query = []): array
+    {
+        $response = $this->client->request('POST', $this->endpoint . $this->version
+            . $uri, ['query' => $query]);
+
+        return $this->transformer->transform($response);
+    }
+
+    /**
+     * @param string $uri
+     * @param array $query
+     * @return array
+     * @throws Exception
+     */
+    public function delete(string $uri, array $query = []): array
+    {
+        $response = $this->client->request('DELETE', $this->endpoint . $this->version
             . $uri, ['query' => $query]);
 
         return $this->transformer->transform($response);

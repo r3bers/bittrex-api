@@ -16,28 +16,48 @@ class Market extends Api
      * @param string $market
      * @param float $quantity
      * @param float $rate
+     * @param bool $useAwards
      * @return array
      * @throws Exception
      */
-    public function buyLimit(string $market, float $quantity, float $rate): array
+    public function buyLimit(string $market, float $quantity, float $rate, $useAwards = true): array
     {
-        $parameters = ['market' => $market, 'quantity' => $quantity, 'rate' => $rate];
+        $parameters = [
+            'marketSymbol' => $market,
+            'direction' => 'BUY',
+            'type' => 'LIMIT',
+            'quantity' => $quantity,
+            'limit' => $rate,
+            'timeInForce' => 'GOOD_TIL_CANCELLED',
+            'useAwards' => $useAwards
 
-        return $this->get('/market/buylimit', $parameters);
+        ];
+
+        return $this->post('/market/buylimit', $parameters);
     }
 
     /**
      * @param string $market
      * @param float $quantity
      * @param float $rate
+     * @param bool $useAwards
      * @return array
      * @throws Exception
      */
-    public function sellLimit(string $market, float $quantity, float $rate): array
+    public function sellLimit(string $market, float $quantity, float $rate, $useAwards = true): array
     {
-        $parameters = ['market' => $market, 'quantity' => $quantity, 'rate' => $rate];
+        $parameters = [
+            'marketSymbol' => $market,
+            'direction' => 'SELL',
+            'type' => 'LIMIT',
+            'quantity' => $quantity,
+            'limit' => $rate,
+            'timeInForce' => 'GOOD_TIL_CANCELLED',
+            'useAwards' => $useAwards
 
-        return $this->get('/market/selllimit', $parameters);
+        ];
+
+        return $this->post('/market/buylimit', $parameters);
     }
 
     /**
@@ -47,9 +67,7 @@ class Market extends Api
      */
     public function cancel(string $uuid): array
     {
-        $parameters = ['uuid' => $uuid];
-
-        return $this->get('/market/cancel', $parameters);
+        return $this->delete('/orders/' . $uuid);
     }
 
     /**
@@ -62,9 +80,9 @@ class Market extends Api
         $parameters = [];
 
         if (!is_null($market)) {
-            $parameters['market'] = $market;
+            $parameters['marketSymbol'] = $market;
         }
 
-        return $this->get('/market/getopenorders', $parameters);
+        return $this->get('/orders/open', $parameters);
     }
 }

@@ -48,9 +48,7 @@ $data = $client->public()->getMarkets();
 ### Public API
 
 #### Get the open and available trading markets
-```php
-$data = $client->public()->getMarkets();
-```
+    $data = $client->public()->getMarkets();
 
 #### Get all supported currencies
 ```php

@@ -14,7 +14,7 @@ class AccountTest extends ApiTestCase
         $request = $this->getLastRequest();
 
         $this->assertEquals(
-            '/api/v1.1/account/getbalances?nonce=1585301777&apikey=API_KEY',
+            '/api/v3/account/getbalances?nonce=1585301777&apikey=API_KEY',
             $request->getUri()->__toString()
         );
         $this->assertNotEmpty($request->getHeaderLine('apisign'));
@@ -26,7 +26,7 @@ class AccountTest extends ApiTestCase
         $request = $this->getLastRequest();
 
         $this->assertEquals(
-            '/api/v1.1/account/getbalance?currency=BTC&nonce=1585301777&apikey=API_KEY',
+            '/api/v3/account/getbalance?currency=BTC&nonce=1585301777&apikey=API_KEY',
             $request->getUri()->__toString()
         );
         $this->assertNotEmpty($request->getHeaderLine('apisign'));
@@ -38,7 +38,7 @@ class AccountTest extends ApiTestCase
         $request = $this->getLastRequest();
 
         $this->assertEquals(
-            '/api/v1.1/account/getdepositaddress?currency=BTC&nonce=1585301777&apikey=API_KEY',
+            '/api/v3/account/getdepositaddress?currency=BTC&nonce=1585301777&apikey=API_KEY',
             $request->getUri()->__toString()
         );
         $this->assertNotEmpty($request->getHeaderLine('apisign'));
@@ -50,7 +50,7 @@ class AccountTest extends ApiTestCase
 
         $request = $this->getLastRequest();
         $this->assertEquals(
-            '/api/v1.1/account/withdraw?currency=BTC&quantity=1.4&address=12rwaw7p4eTQ3DL5gu4fSYYx3M3kZxxQVn'
+            '/api/v3/account/withdraw?currency=BTC&quantity=1.4&address=12rwaw7p4eTQ3DL5gu4fSYYx3M3kZxxQVn'
             . '&paymentid=paymentId&nonce=1585301777&apikey=API_KEY',
             $request->getUri()->__toString()
         );
@@ -63,7 +63,7 @@ class AccountTest extends ApiTestCase
 
         $request = $this->getLastRequest();
         $this->assertEquals(
-            '/api/v1.1/account/getorder?uuid=251c48e7-95d4-d53f-ad76-a7c6547b74ca9&nonce=1585301777&apikey=API_KEY',
+            '/api/v3/account/getorder?uuid=251c48e7-95d4-d53f-ad76-a7c6547b74ca9&nonce=1585301777&apikey=API_KEY',
             $request->getUri()->__toString()
         );
         $this->assertNotEmpty($request->getHeaderLine('apisign'));
@@ -75,7 +75,7 @@ class AccountTest extends ApiTestCase
 
         $request = $this->getLastRequest();
         $this->assertEquals(
-            '/api/v1.1/account/getorderhistory?market=BTC-LTC&nonce=1585301777&apikey=API_KEY',
+            '/api/v3/account/getorderhistory?market=BTC-LTC&nonce=1585301777&apikey=API_KEY',
             $request->getUri()->__toString()
         );
         $this->assertNotEmpty($request->getHeaderLine('apisign'));
@@ -87,7 +87,7 @@ class AccountTest extends ApiTestCase
 
         $request = $this->getLastRequest();
         $this->assertEquals(
-            '/api/v1.1/account/getwithdrawalhistory?currency=BTC&nonce=1585301777&apikey=API_KEY',
+            '/api/v3/account/getwithdrawalhistory?currency=BTC&nonce=1585301777&apikey=API_KEY',
             $request->getUri()->__toString()
         );
         $this->assertNotEmpty($request->getHeaderLine('apisign'));
@@ -99,7 +99,7 @@ class AccountTest extends ApiTestCase
 
         $request = $this->getLastRequest();
         $this->assertEquals(
-            '/api/v1.1/account/getdeposithistory?currency=BTC&nonce=1585301777&apikey=API_KEY',
+            '/api/v3/account/getdeposithistory?currency=BTC&nonce=1585301777&apikey=API_KEY',
             $request->getUri()->__toString()
         );
         $this->assertNotEmpty($request->getHeaderLine('apisign'));

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace R3bers\BittrexApi\Tests\Api;
 
 use R3bers\BittrexApi\Api\Account;
+use R3bers\BittrexApi\Tests\Api\ApiTestCase;
 
 class AccountTest extends ApiTestCase
 {

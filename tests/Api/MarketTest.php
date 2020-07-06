@@ -14,10 +14,19 @@ class MarketTest extends ApiTestCase
         $request = $this->getLastRequest();
 
         $this->assertEquals(
-            '/api/v3/market/buylimit?market=USDT-BTC&quantity=1&rate=1&nonce=1585301777&apikey=API_KEY',
+            '/v3/orders?marketSymbol=USDT-BTC&direction=BUY&type=LIMIT&quantity=1&limit=1&timeInForce=GOOD_TIL_CANCELLED&useAwards=1',
             $request->getUri()->__toString()
         );
-        $this->assertNotEmpty($request->getHeaderLine('apisign'));
+        $this->assertEquals(
+            'API_KEY',
+            $request->getHeaderLine('Api-Key')
+        );
+        $this->assertEquals(
+            hash('sha512',''),
+            $request->getHeaderLine('Api-Content-Hash')
+        );
+        $this->assertNotEmpty($request->getHeaderLine('Api-Timestamp'));
+        $this->assertNotEmpty($request->getHeaderLine('Api-Signature'));
     }
 
     public function testSellLimit()
@@ -26,10 +35,19 @@ class MarketTest extends ApiTestCase
         $request = $this->getLastRequest();
 
         $this->assertEquals(
-            '/api/v3/market/selllimit?market=BTC-LTC&quantity=1.2&rate=1.3&nonce=1585301777&apikey=API_KEY',
+            '/v3/orders?marketSymbol=BTC-LTC&direction=SELL&type=LIMIT&quantity=1.2&limit=1.3&timeInForce=GOOD_TIL_CANCELLED&useAwards=1',
             $request->getUri()->__toString()
         );
-        $this->assertNotEmpty($request->getHeaderLine('apisign'));
+        $this->assertEquals(
+            'API_KEY',
+            $request->getHeaderLine('Api-Key')
+        );
+        $this->assertEquals(
+            hash('sha512',''),
+            $request->getHeaderLine('Api-Content-Hash')
+        );
+        $this->assertNotEmpty($request->getHeaderLine('Api-Timestamp'));
+        $this->assertNotEmpty($request->getHeaderLine('Api-Signature'));
     }
 
     public function testCancel()
@@ -38,10 +56,19 @@ class MarketTest extends ApiTestCase
         $request = $this->getLastRequest();
 
         $this->assertEquals(
-            '/api/v3/market/cancel?uuid=251c48e7-95d4-d53f-ad76-a7c6547b74ca9&nonce=1585301777&apikey=API_KEY',
+            '/v3/orders/251c48e7-95d4-d53f-ad76-a7c6547b74ca9',
             $request->getUri()->__toString()
         );
-        $this->assertNotEmpty($request->getHeaderLine('apisign'));
+        $this->assertEquals(
+            'API_KEY',
+            $request->getHeaderLine('Api-Key')
+        );
+        $this->assertEquals(
+            hash('sha512',''),
+            $request->getHeaderLine('Api-Content-Hash')
+        );
+        $this->assertNotEmpty($request->getHeaderLine('Api-Timestamp'));
+        $this->assertNotEmpty($request->getHeaderLine('Api-Signature'));
     }
 
     public function testGetOpenOrders()
@@ -50,10 +77,19 @@ class MarketTest extends ApiTestCase
 
         $request = $this->getLastRequest();
         $this->assertEquals(
-            '/api/v3/market/getopenorders?nonce=1585301777&apikey=API_KEY',
+            '/v3/orders/open',
             $request->getUri()->__toString()
         );
-        $this->assertNotEmpty($request->getHeaderLine('apisign'));
+        $this->assertEquals(
+            'API_KEY',
+            $request->getHeaderLine('Api-Key')
+        );
+        $this->assertEquals(
+            hash('sha512',''),
+            $request->getHeaderLine('Api-Content-Hash')
+        );
+        $this->assertNotEmpty($request->getHeaderLine('Api-Timestamp'));
+        $this->assertNotEmpty($request->getHeaderLine('Api-Signature'));
     }
 
     public function testGetOpenOrdersWithMarket()
@@ -62,10 +98,19 @@ class MarketTest extends ApiTestCase
 
         $request = $this->getLastRequest();
         $this->assertEquals(
-            '/api/v3/market/getopenorders?market=BTC-LTC&nonce=1585301777&apikey=API_KEY',
+            '/v3/orders/open?marketSymbol=BTC-LTC',
             $request->getUri()->__toString()
         );
-        $this->assertNotEmpty($request->getHeaderLine('apisign'));
+        $this->assertEquals(
+            'API_KEY',
+            $request->getHeaderLine('Api-Key')
+        );
+        $this->assertEquals(
+            hash('sha512',''),
+            $request->getHeaderLine('Api-Content-Hash')
+        );
+        $this->assertNotEmpty($request->getHeaderLine('Api-Timestamp'));
+        $this->assertNotEmpty($request->getHeaderLine('Api-Signature'));
     }
 
     private function createApi(): Market

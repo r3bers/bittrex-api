@@ -20,7 +20,7 @@ class Api
     protected $transformer;
     /** @var string */
     private $version = 'v3';
-    private $endpoint = '/api/';
+    private $endpoint = '/';
 
     /**
      * Api constructor.

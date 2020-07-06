@@ -13,7 +13,7 @@ class PublicApiTest extends ApiTestCase
         $this->createApi()->getMarkets();
         $request = $this->getLastRequest();
 
-        $this->assertEquals('/api/v3/markets', $request->getUri()->__toString());
+        $this->assertEquals('/v3/markets', $request->getUri()->__toString());
     }
 
     public function testGetCurrencies()
@@ -21,14 +21,14 @@ class PublicApiTest extends ApiTestCase
         $this->createApi()->getCurrencies();
         $request = $this->getLastRequest();
 
-        $this->assertEquals('/api/v3/currencies', $request->getUri()->__toString());
+        $this->assertEquals('/v3/currencies', $request->getUri()->__toString());
     }
 
     public function testGetTicker()
     {
         $this->createApi()->getTicker('BTC-LTC');
         $request = $this->getLastRequest();
-        $this->assertEquals('/api/v3/markets/BTC-LTC/ticker', $request->getUri()->__toString());
+        $this->assertEquals('/v3/markets/BTC-LTC/ticker', $request->getUri()->__toString());
     }
 
     public function testGetMarketSummaries()
@@ -36,7 +36,7 @@ class PublicApiTest extends ApiTestCase
         $this->createApi()->getMarketSummaries();
 
         $request = $this->getLastRequest();
-        $this->assertEquals('/api/v3/markets/summaries', $request->getUri()->__toString());
+        $this->assertEquals('/v3/markets/summaries', $request->getUri()->__toString());
     }
 
     public function testGetMarketSummary()
@@ -44,7 +44,7 @@ class PublicApiTest extends ApiTestCase
         $this->createApi()->getMarketSummary('BTC-LTC');
 
         $request = $this->getLastRequest();
-        $this->assertEquals('/api/v3/markets/BTC-LTC/summary', $request->getUri()->__toString());
+        $this->assertEquals('/v3/markets/BTC-LTC/summary', $request->getUri()->__toString());
     }
 
     public function testGetOrderBook()
@@ -52,7 +52,7 @@ class PublicApiTest extends ApiTestCase
         $this->createApi()->getOrderBook('BTC-LTC');
 
         $request = $this->getLastRequest();
-        $this->assertEquals('/api/v3/markets/BTC-LTC/orderbook?depth=25', $request->getUri()->__toString());
+        $this->assertEquals('/v3/markets/BTC-LTC/orderbook?depth=25', $request->getUri()->__toString());
     }
 
     public function testGetMarketHistory()
@@ -60,7 +60,7 @@ class PublicApiTest extends ApiTestCase
         $this->createApi()->getMarketHistory('BTC-LTC');
 
         $request = $this->getLastRequest();
-        $this->assertEquals('/api/v3/markets/BTC-LTC/trades', $request->getUri()->__toString());
+        $this->assertEquals('/v3/markets/BTC-LTC/trades', $request->getUri()->__toString());
     }
 
     private function createApi(): PublicApi

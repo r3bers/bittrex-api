@@ -33,7 +33,7 @@ class Market extends Api
 
         ];
 
-        return $this->post('/market/buylimit', $parameters);
+        return $this->post('/orders', $parameters);
     }
 
     /**
@@ -57,7 +57,7 @@ class Market extends Api
 
         ];
 
-        return $this->post('/market/buylimit', $parameters);
+        return $this->post('/orders', $parameters);
     }
 
     /**

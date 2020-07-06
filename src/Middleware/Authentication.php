@@ -16,19 +16,24 @@ class Authentication
     private $secret;
 
     /** @var string */
-    private $nonce;
+    private $subaccountId;
+
+    /** @var string */
+    private $baseUri;
 
     /**
      * Authentication constructor.
      * @param string $key
      * @param string $secret
-     * @param string $nonce
+     * @param string $baseUri
+     * @param string $subaccountId
      */
-    public function __construct(string $key, string $secret, string $nonce)
+    public function __construct(string $key, string $secret, string $baseUri, string $subaccountId = '')
     {
         $this->key = $key;
         $this->secret = $secret;
-        $this->nonce = $nonce;
+        $this->subaccountId = $subaccountId;
+        $this->baseUri = $baseUri;
     }
 
     /**
@@ -38,35 +43,42 @@ class Authentication
     public function __invoke(callable $next)
     {
         return function (RequestInterface $request, array $options = []) use ($next) {
-
-            $request = $this->addAuthQueryParams($request);
-            $sign = $this->generateSign($request->getUri()->__toString());
-            $request = $request->withAddedHeader('apisign', $sign);
+            $timestamp = round(microtime(true) * 1000);
+            $contentHash = $this->generateContentHash($request->getBody()->__toString());
+            $pre_sign = $timestamp .
+                $this->baseUri .
+                $request->getUri()->__toString() .
+                $request->getMethod() .
+                $contentHash .
+                $this->subaccountId;
+            $sign = $this->generateSign($pre_sign);
+            $request = $request->withAddedHeader('Api-Key', $this->key);
+            $request = $request->withAddedHeader('Api-Timestamp', $timestamp);
+            $request = $request->withAddedHeader('Api-Content-Hash', $contentHash);
+            $request = $request->withAddedHeader('Api-Signature', $sign);
+            $request = $request->withAddedHeader('Api-Subaccount-Id', $this->subaccountId);
 
             return $next($request, $options);
         };
     }
 
     /**
-     * @param RequestInterface $request
-     * @return RequestInterface
+     * @param string $content
+     * @return string
      */
-    private function addAuthQueryParams(RequestInterface $request): RequestInterface
+    private function generateContentHash(string $content): string
     {
-        parse_str($request->getUri()->getQuery(), $params);
-        $params['nonce'] = $this->nonce;
-        $params['apikey'] = $this->key;
-        $uri = $request->getUri()->withQuery(http_build_query($params));
-
-        return $request->withUri($uri);
+        return hash('sha512', $content);
     }
 
     /**
-     * @param string $uri
+     * @param string $preSign
      * @return string
      */
-    private function generateSign(string $uri): string
+    private function generateSign(string $preSign): string
     {
-        return hash_hmac('sha512', $uri, $this->secret);
+        return hash_hmac('sha512', $preSign, $this->secret);
     }
+
+
 }

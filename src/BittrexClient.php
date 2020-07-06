@@ -25,7 +25,7 @@ class BittrexClient
     /** @var string */
     private $key = '';
 
-    /** @var string  */
+    /** @var string */
     private $secret = '';
 
     /**
@@ -36,6 +36,63 @@ class BittrexClient
     {
         $this->key = $key;
         $this->secret = $secret;
+    }
+
+    /**
+     * @return PublicApi
+     */
+    public function public(): PublicApi
+    {
+        return new PublicApi($this->getPublicClient());
+    }
+
+    /**
+     * @return Client
+     */
+    private function getPublicClient(): Client
+    {
+        return $this->publicClient ?: $this->createPublicClient();
+    }
+
+    /**
+     * @return Client
+     */
+    private function createPublicClient(): Client
+    {
+        return new Client(['base_uri' => self::BASE_URI]);
+    }
+
+    /**
+     * @return Market
+     * @throws InvalidCredentialException
+     */
+    public function market(): Market
+    {
+        return new Market($this->getPrivateClient());
+    }
+
+    /**
+     * @return Client
+     * @throws InvalidCredentialException
+     */
+    private function getPrivateClient(): Client
+    {
+        return $this->privateClient ?: $this->createPrivateClient();
+    }
+
+    /**
+     * @return Client
+     * @throws InvalidCredentialException
+     */
+    private function createPrivateClient(): Client
+    {
+        if (empty($this->key) || empty($this->secret)) {
+            throw new InvalidCredentialException('Key and secret must be set for authenticated API');
+        }
+        $stack = HandlerStack::create();
+        $stack->push(new Authentication($this->getKey(), $this->getSecret(), self::BASE_URI));
+
+        return new Client(['handler' => $stack, 'base_uri' => self::BASE_URI]);
     }
 
     /**
@@ -55,68 +112,11 @@ class BittrexClient
     }
 
     /**
-     * @return PublicApi
-     */
-    public function public(): PublicApi
-    {
-        return new PublicApi($this->getPublicClient());
-    }
-
-    /**
-     * @return Market
-     * @throws InvalidCredentialException
-     */
-    public function market(): Market
-    {
-        return new Market($this->getPrivateClient());
-    }
-
-    /**
      * @return Account
      * @throws InvalidCredentialException
      */
     public function account(): Account
     {
         return new Account($this->getPrivateClient());
-    }
-
-    /**
-     * @return Client
-     */
-    private function createPublicClient(): Client
-    {
-        return new Client(['base_uri' => self::BASE_URI]);
-    }
-
-    /**
-     * @return Client
-     * @throws InvalidCredentialException
-     */
-    private function createPrivateClient(): Client
-    {
-        if (empty($this->key) || empty($this->secret)) {
-            throw new InvalidCredentialException('Key and secret must be set for authenticated API');
-        }
-        $stack = HandlerStack::create();
-        $stack->push(new Authentication($this->getKey(), $this->getSecret(), (string)time()));
-
-        return new Client(['handler' => $stack, 'base_uri' => self::BASE_URI]);
-    }
-
-    /**
-     * @return Client
-     * @throws InvalidCredentialException
-     */
-    private function getPrivateClient(): Client
-    {
-        return $this->privateClient ?: $this->createPrivateClient();
-    }
-
-    /**
-     * @return Client
-     */
-    private function getPublicClient(): Client
-    {
-        return $this->publicClient ?: $this->createPublicClient();
     }
 }

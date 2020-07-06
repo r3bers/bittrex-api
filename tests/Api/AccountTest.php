@@ -14,10 +14,19 @@ class AccountTest extends ApiTestCase
         $request = $this->getLastRequest();
 
         $this->assertEquals(
-            '/api/v3/account/getbalances?nonce=1585301777&apikey=API_KEY',
+            '/v3/account/getbalances',
             $request->getUri()->__toString()
         );
-        $this->assertNotEmpty($request->getHeaderLine('apisign'));
+        $this->assertEquals(
+            'API_KEY',
+            $request->getHeaderLine('Api-Key')
+        );
+        $this->assertEquals(
+            hash('sha512',''),
+            $request->getHeaderLine('Api-Content-Hash')
+        );
+        $this->assertNotEmpty($request->getHeaderLine('Api-Timestamp'));
+        $this->assertNotEmpty($request->getHeaderLine('Api-Signature'));
     }
 
     public function testGetBalance()
@@ -26,10 +35,19 @@ class AccountTest extends ApiTestCase
         $request = $this->getLastRequest();
 
         $this->assertEquals(
-            '/api/v3/account/getbalance?currency=BTC&nonce=1585301777&apikey=API_KEY',
+            '/v3/account/getbalance?currency=BTC',
             $request->getUri()->__toString()
         );
-        $this->assertNotEmpty($request->getHeaderLine('apisign'));
+        $this->assertEquals(
+            'API_KEY',
+            $request->getHeaderLine('Api-Key')
+        );
+        $this->assertEquals(
+            hash('sha512',''),
+            $request->getHeaderLine('Api-Content-Hash')
+        );
+        $this->assertNotEmpty($request->getHeaderLine('Api-Timestamp'));
+        $this->assertNotEmpty($request->getHeaderLine('Api-Signature'));
     }
 
     public function testGetDepositAddress()
@@ -38,10 +56,19 @@ class AccountTest extends ApiTestCase
         $request = $this->getLastRequest();
 
         $this->assertEquals(
-            '/api/v3/account/getdepositaddress?currency=BTC&nonce=1585301777&apikey=API_KEY',
+            '/v3/account/getdepositaddress?currency=BTC',
             $request->getUri()->__toString()
         );
-        $this->assertNotEmpty($request->getHeaderLine('apisign'));
+        $this->assertEquals(
+            'API_KEY',
+            $request->getHeaderLine('Api-Key')
+        );
+        $this->assertEquals(
+            hash('sha512',''),
+            $request->getHeaderLine('Api-Content-Hash')
+        );
+        $this->assertNotEmpty($request->getHeaderLine('Api-Timestamp'));
+        $this->assertNotEmpty($request->getHeaderLine('Api-Signature'));
     }
 
     public function testWithdraw()
@@ -50,11 +77,20 @@ class AccountTest extends ApiTestCase
 
         $request = $this->getLastRequest();
         $this->assertEquals(
-            '/api/v3/account/withdraw?currency=BTC&quantity=1.4&address=12rwaw7p4eTQ3DL5gu4fSYYx3M3kZxxQVn'
-            . '&paymentid=paymentId&nonce=1585301777&apikey=API_KEY',
+            '/v3/account/withdraw?currency=BTC&quantity=1.4&address=12rwaw7p4eTQ3DL5gu4fSYYx3M3kZxxQVn'
+            . '&paymentid=paymentId',
             $request->getUri()->__toString()
         );
-        $this->assertNotEmpty($request->getHeaderLine('apisign'));
+        $this->assertEquals(
+            'API_KEY',
+            $request->getHeaderLine('Api-Key')
+        );
+        $this->assertEquals(
+            hash('sha512',''),
+            $request->getHeaderLine('Api-Content-Hash')
+        );
+        $this->assertNotEmpty($request->getHeaderLine('Api-Timestamp'));
+        $this->assertNotEmpty($request->getHeaderLine('Api-Signature'));
     }
 
     public function testGetOrder()
@@ -63,10 +99,19 @@ class AccountTest extends ApiTestCase
 
         $request = $this->getLastRequest();
         $this->assertEquals(
-            '/api/v3/account/getorder?uuid=251c48e7-95d4-d53f-ad76-a7c6547b74ca9&nonce=1585301777&apikey=API_KEY',
+            '/v3/account/getorder?uuid=251c48e7-95d4-d53f-ad76-a7c6547b74ca9',
             $request->getUri()->__toString()
         );
-        $this->assertNotEmpty($request->getHeaderLine('apisign'));
+        $this->assertEquals(
+            'API_KEY',
+            $request->getHeaderLine('Api-Key')
+        );
+        $this->assertEquals(
+            hash('sha512',''),
+            $request->getHeaderLine('Api-Content-Hash')
+        );
+        $this->assertNotEmpty($request->getHeaderLine('Api-Timestamp'));
+        $this->assertNotEmpty($request->getHeaderLine('Api-Signature'));
     }
 
     public function testGetOrderHistory()
@@ -75,10 +120,19 @@ class AccountTest extends ApiTestCase
 
         $request = $this->getLastRequest();
         $this->assertEquals(
-            '/api/v3/account/getorderhistory?market=BTC-LTC&nonce=1585301777&apikey=API_KEY',
+            '/v3/account/getorderhistory?market=BTC-LTC',
             $request->getUri()->__toString()
         );
-        $this->assertNotEmpty($request->getHeaderLine('apisign'));
+        $this->assertEquals(
+            'API_KEY',
+            $request->getHeaderLine('Api-Key')
+        );
+        $this->assertEquals(
+            hash('sha512',''),
+            $request->getHeaderLine('Api-Content-Hash')
+        );
+        $this->assertNotEmpty($request->getHeaderLine('Api-Timestamp'));
+        $this->assertNotEmpty($request->getHeaderLine('Api-Signature'));
     }
 
     public function testGetWithdrawalHistory()
@@ -87,10 +141,19 @@ class AccountTest extends ApiTestCase
 
         $request = $this->getLastRequest();
         $this->assertEquals(
-            '/api/v3/account/getwithdrawalhistory?currency=BTC&nonce=1585301777&apikey=API_KEY',
+            '/v3/account/getwithdrawalhistory?currency=BTC',
             $request->getUri()->__toString()
         );
-        $this->assertNotEmpty($request->getHeaderLine('apisign'));
+        $this->assertEquals(
+            'API_KEY',
+            $request->getHeaderLine('Api-Key')
+        );
+        $this->assertEquals(
+            hash('sha512',''),
+            $request->getHeaderLine('Api-Content-Hash')
+        );
+        $this->assertNotEmpty($request->getHeaderLine('Api-Timestamp'));
+        $this->assertNotEmpty($request->getHeaderLine('Api-Signature'));
     }
 
     public function testGetDepositHistory()
@@ -99,10 +162,19 @@ class AccountTest extends ApiTestCase
 
         $request = $this->getLastRequest();
         $this->assertEquals(
-            '/api/v3/account/getdeposithistory?currency=BTC&nonce=1585301777&apikey=API_KEY',
+            '/v3/account/getdeposithistory?currency=BTC',
             $request->getUri()->__toString()
         );
-        $this->assertNotEmpty($request->getHeaderLine('apisign'));
+        $this->assertEquals(
+            'API_KEY',
+            $request->getHeaderLine('Api-Key')
+        );
+        $this->assertEquals(
+            hash('sha512',''),
+            $request->getHeaderLine('Api-Content-Hash')
+        );
+        $this->assertNotEmpty($request->getHeaderLine('Api-Timestamp'));
+        $this->assertNotEmpty($request->getHeaderLine('Api-Signature'));
     }
 
     private function createApi(): Account

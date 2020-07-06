@@ -18,7 +18,7 @@ class Account extends Api
      */
     public function getBalances(): array
     {
-        return $this->get('/account/getbalances');
+        return $this->get('/balances');
     }
 
     /**
@@ -28,9 +28,7 @@ class Account extends Api
      */
     public function getBalance(string $currency): array
     {
-        $parameters = ['currency' => $currency];
-
-        return $this->get('/account/getbalance', $parameters);
+        return $this->get('/balances/' . $currency);
     }
 
     /**
@@ -40,9 +38,7 @@ class Account extends Api
      */
     public function getDepositAddress(string $currency): array
     {
-        $parameters = ['currency' => $currency];
-
-        return $this->get('/account/getdepositaddress', $parameters);
+        return $this->get('/addresses/' . $currency);
     }
 
     /**
@@ -55,13 +51,17 @@ class Account extends Api
      */
     public function withdraw(string $currency, float $quantity, string $address, ?string $paymentId = null): array
     {
-        $parameters = ['currency' => $currency, 'quantity' => (string)$quantity, 'address' => $address];
+        $newWithdrawal = [
+            'currencySymbol' => $currency,
+            'quantity' => $quantity,
+            'cryptoAddress' => $address,
+        ];
 
         if (!is_null($paymentId)) {
-            $parameters['paymentid'] = $paymentId;
+            $newWithdrawal['cryptoAddressTag'] = $paymentId;
         }
 
-        return $this->get('/account/withdraw', $parameters);
+        return $this->post('/withdrawals', json_encode($newWithdrawal));
     }
 
     /**
@@ -71,56 +71,82 @@ class Account extends Api
      */
     public function getOrder(string $uuid): array
     {
-        $parameters = ['uuid' => $uuid];
+        return $this->get('/orders/' . $uuid);
+    }
 
-        return $this->get('/account/getorder', $parameters);
+    public function getOrderHistory(?string $marketSymbol = null, ?string $nextPageToken = null, ?string $previousPageToken = null, ?string $pageSize = null,
+                                    ?string $startDate = null, ?string $endDate = null): array
+    {
+        $parameters = $this->historyPagination($nextPageToken, $previousPageToken, $pageSize, $startDate, $endDate);
+
+        if (!is_null($marketSymbol)) $parameters['marketSymbol'] = $marketSymbol;
+
+        return $this->get('/orders/closed', $parameters);
     }
 
     /**
-     * @param string|null $market
+     * @param string|null $nextPageToken
+     * @param string|null $previousPageToken
+     * @param string|null $pageSize
+     * @param string|null $startDate
+     * @param string|null $endDate
      * @return array
-     * @throws Exception
      */
-    public function getOrderHistory(?string $market = null): array
+    private function historyPagination(?string $nextPageToken = null, ?string $previousPageToken = null, ?string $pageSize = null, ?string $startDate = null,
+                                       ?string $endDate = null): array
     {
-        $parameters = [];
+        $pagination = [];
 
-        if (!is_null($market)) {
-            $parameters['market'] = $market;
-        }
+        if (!is_null($nextPageToken)) $pagination['nextPageToken'] = $nextPageToken;
+        if (!is_null($previousPageToken)) $pagination['previousPageToken'] = $previousPageToken;
+        if (!is_null($pageSize)) $pagination['pageSize'] = $pageSize;
+        if (!is_null($startDate)) $pagination['startDate'] = $startDate;
+        if (!is_null($endDate)) $pagination['endDate'] = $endDate;
 
-        return $this->get('/account/getorderhistory', $parameters);
+        return $pagination;
     }
 
     /**
-     * @param string|null $currency
+     * @param string|null $currencySymbol
+     * @param string|null $status
+     * @param string|null $nextPageToken
+     * @param string|null $previousPageToken
+     * @param string|null $pageSize
+     * @param string|null $startDate
+     * @param string|null $endDate
      * @return array
      * @throws Exception
      */
-    public function getWithdrawalHistory(string $currency = null): array
+    public function getWithdrawalHistory(?string $currencySymbol = null, ?string $status = null, ?string $nextPageToken = null, ?string $previousPageToken = null,
+                                         ?string $pageSize = null, ?string $startDate = null, ?string $endDate = null): array
     {
-        $parameters = [];
+        $parameters = $this->historyPagination($nextPageToken, $previousPageToken, $pageSize, $startDate, $endDate);
 
-        if (!is_null($currency)) {
-            $parameters['currency'] = $currency;
-        }
+        if (!is_null($currencySymbol)) $parameters['currencySymbol'] = $currencySymbol;
+        if (!is_null($status)) $parameters['status'] = $status;
 
-        return $this->get('/account/getwithdrawalhistory', $parameters);
+        return $this->get('/withdrawals/closed', $parameters);
     }
 
     /**
-     * @param string|null $currency
+     * @param string|null $currencySymbol
+     * @param string|null $status
+     * @param string|null $nextPageToken
+     * @param string|null $previousPageToken
+     * @param string|null $pageSize
+     * @param string|null $startDate
+     * @param string|null $endDate
      * @return array
      * @throws Exception
      */
-    public function getDepositHistory(?string $currency = null): array
+    public function getDepositHistory(?string $currencySymbol = null, ?string $status = null, ?string $nextPageToken = null, ?string $previousPageToken = null,
+                                      ?string $pageSize = null, ?string $startDate = null, ?string $endDate = null): array
     {
-        $parameters = [];
+        $parameters = $this->historyPagination($nextPageToken, $previousPageToken, $pageSize, $startDate, $endDate);
 
-        if (!is_null($currency)) {
-            $parameters['currency'] = $currency;
-        }
+        if (!is_null($currencySymbol)) $parameters['currencySymbol'] = $currencySymbol;
+        if (!is_null($status)) $parameters['status'] = $status;
 
-        return $this->get('/account/getdeposithistory', $parameters);
+        return $this->get('/deposits/closed', $parameters);
     }
 }

@@ -14,7 +14,7 @@ class MarketTest extends ApiTestCase
         $request = $this->getLastRequest();
 
         $this->assertEquals(
-            '/v3/orders?marketSymbol=USDT-BTC&direction=BUY&type=LIMIT&quantity=1&limit=1&timeInForce=GOOD_TIL_CANCELLED&useAwards=1',
+            '/v3/orders',
             $request->getUri()->__toString()
         );
         $this->assertEquals(
@@ -22,7 +22,7 @@ class MarketTest extends ApiTestCase
             $request->getHeaderLine('Api-Key')
         );
         $this->assertEquals(
-            hash('sha512',''),
+            hash('sha512',$request->getBody()->__toString()),
             $request->getHeaderLine('Api-Content-Hash')
         );
         $this->assertNotEmpty($request->getHeaderLine('Api-Timestamp'));
@@ -35,7 +35,7 @@ class MarketTest extends ApiTestCase
         $request = $this->getLastRequest();
 
         $this->assertEquals(
-            '/v3/orders?marketSymbol=BTC-LTC&direction=SELL&type=LIMIT&quantity=1.2&limit=1.3&timeInForce=GOOD_TIL_CANCELLED&useAwards=1',
+            '/v3/orders',
             $request->getUri()->__toString()
         );
         $this->assertEquals(
@@ -43,7 +43,7 @@ class MarketTest extends ApiTestCase
             $request->getHeaderLine('Api-Key')
         );
         $this->assertEquals(
-            hash('sha512',''),
+            hash('sha512',$request->getBody()->__toString()),
             $request->getHeaderLine('Api-Content-Hash')
         );
         $this->assertNotEmpty($request->getHeaderLine('Api-Timestamp'));

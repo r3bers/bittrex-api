@@ -22,7 +22,7 @@ class Market extends Api
      */
     public function buyLimit(string $market, float $quantity, float $rate, $useAwards = true): array
     {
-        $parameters = [
+        $newOrder = [
             'marketSymbol' => $market,
             'direction' => 'BUY',
             'type' => 'LIMIT',
@@ -33,7 +33,7 @@ class Market extends Api
 
         ];
 
-        return $this->post('/orders', $parameters);
+        return $this->post('/orders', json_encode($newOrder));
     }
 
     /**
@@ -46,7 +46,7 @@ class Market extends Api
      */
     public function sellLimit(string $market, float $quantity, float $rate, $useAwards = true): array
     {
-        $parameters = [
+        $newOrder = [
             'marketSymbol' => $market,
             'direction' => 'SELL',
             'type' => 'LIMIT',
@@ -57,7 +57,7 @@ class Market extends Api
 
         ];
 
-        return $this->post('/orders', $parameters);
+        return $this->post('/orders', json_encode($newOrder));
     }
 
     /**

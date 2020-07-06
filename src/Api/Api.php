@@ -48,14 +48,15 @@ class Api
 
     /**
      * @param string $uri
-     * @param array $query
+     * @param string $body
      * @return array
-     * @throws Exception
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \R3bers\BittrexApi\Exception\TransformResponseException
      */
-    public function post(string $uri, array $query = []): array
+    public function post(string $uri, string $body = ''): array
     {
         $response = $this->client->request('POST', $this->endpoint . $this->version
-            . $uri, ['query' => $query]);
+            . $uri, ['body' => $body]);
 
         return $this->transformer->transform($response);
     }

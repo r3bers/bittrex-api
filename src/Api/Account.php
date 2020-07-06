@@ -74,53 +74,30 @@ class Account extends Api
         return $this->get('/orders/' . $uuid);
     }
 
-    public function getOrderHistory(?string $marketSymbol = null, ?string $nextPageToken = null, ?string $previousPageToken = null, ?string $pageSize = null,
-                                    ?string $startDate = null, ?string $endDate = null): array
+    /**
+     * @param string|null $marketSymbol
+     * @return array
+     * @throws Exception
+     */
+    public function getOrderHistory(?string $marketSymbol = null): array
     {
-        $parameters = $this->historyPagination($nextPageToken, $previousPageToken, $pageSize, $startDate, $endDate);
+        $parameters = [];
 
         if (!is_null($marketSymbol)) $parameters['marketSymbol'] = $marketSymbol;
 
         return $this->get('/orders/closed', $parameters);
     }
 
-    /**
-     * @param string|null $nextPageToken
-     * @param string|null $previousPageToken
-     * @param string|null $pageSize
-     * @param string|null $startDate
-     * @param string|null $endDate
-     * @return array
-     */
-    private function historyPagination(?string $nextPageToken = null, ?string $previousPageToken = null, ?string $pageSize = null, ?string $startDate = null,
-                                       ?string $endDate = null): array
-    {
-        $pagination = [];
-
-        if (!is_null($nextPageToken)) $pagination['nextPageToken'] = $nextPageToken;
-        if (!is_null($previousPageToken)) $pagination['previousPageToken'] = $previousPageToken;
-        if (!is_null($pageSize)) $pagination['pageSize'] = $pageSize;
-        if (!is_null($startDate)) $pagination['startDate'] = $startDate;
-        if (!is_null($endDate)) $pagination['endDate'] = $endDate;
-
-        return $pagination;
-    }
 
     /**
      * @param string|null $currencySymbol
      * @param string|null $status
-     * @param string|null $nextPageToken
-     * @param string|null $previousPageToken
-     * @param string|null $pageSize
-     * @param string|null $startDate
-     * @param string|null $endDate
      * @return array
      * @throws Exception
      */
-    public function getWithdrawalHistory(?string $currencySymbol = null, ?string $status = null, ?string $nextPageToken = null, ?string $previousPageToken = null,
-                                         ?string $pageSize = null, ?string $startDate = null, ?string $endDate = null): array
+    public function getWithdrawalHistory(?string $currencySymbol = null, ?string $status = null): array
     {
-        $parameters = $this->historyPagination($nextPageToken, $previousPageToken, $pageSize, $startDate, $endDate);
+        $parameters = [];
 
         if (!is_null($currencySymbol)) $parameters['currencySymbol'] = $currencySymbol;
         if (!is_null($status)) $parameters['status'] = $status;
@@ -131,18 +108,12 @@ class Account extends Api
     /**
      * @param string|null $currencySymbol
      * @param string|null $status
-     * @param string|null $nextPageToken
-     * @param string|null $previousPageToken
-     * @param string|null $pageSize
-     * @param string|null $startDate
-     * @param string|null $endDate
      * @return array
      * @throws Exception
      */
-    public function getDepositHistory(?string $currencySymbol = null, ?string $status = null, ?string $nextPageToken = null, ?string $previousPageToken = null,
-                                      ?string $pageSize = null, ?string $startDate = null, ?string $endDate = null): array
+    public function getDepositHistory(?string $currencySymbol = null, ?string $status = null): array
     {
-        $parameters = $this->historyPagination($nextPageToken, $previousPageToken, $pageSize, $startDate, $endDate);
+        $parameters = [];
 
         if (!is_null($currencySymbol)) $parameters['currencySymbol'] = $currencySymbol;
         if (!is_null($status)) $parameters['status'] = $status;

@@ -58,7 +58,7 @@ $data = $client->public()->getCurrencies();
 
 #### Get the current tick values for a market
 ```php
-$data = $client->public()->getTicker('BTC-LTC');
+$data = $client->public()->getTicker('LTC-BTC');
 ```
 #### Get the last 24 hour summary of all active exchanges
 ```php
@@ -67,29 +67,29 @@ $data = $client->public()->getMarketSummaries();
 
 #### Get the last 24 hour summary of all active exchanges for a market
 ```php
-$data = $client->public()->getMarketSummary('BTC-LTC');
+$data = $client->public()->getMarketSummary('LTC-BTC');
 ```
 
 #### Get the orderbook for a given market
 ```php
-$data = $client->public()->getOrderBook('BTC-LTC');
+$data = $client->public()->getOrderBook('LTC-BTC');
 ```
 
 #### Get latest trades that have occurred for a specific market
 ```php
-$data = $client->public()->getMarketHistory('BTC-LTC');
+$data = $client->public()->getMarketHistory('LTC-BTC');
 ```
 
 ### Market API
 
 #### Place a buy order in a specific market
 ```php
-$data = $client->market()->buyLimit('BTC-LTC', 1.2, 1.3);
+$data = $client->market()->buyLimit('LTC-BTC', 1.2, 1.3);
 ```
 
 #### Place a sell order in a specific market
 ```php
-$data = $client->market()->sellLimit('BTC-LTC', 1.2, 1.3);
+$data = $client->market()->sellLimit('LTC-BTC', 1.2, 1.3);
 ```
 
 #### Cancel a buy or sell order
@@ -99,7 +99,7 @@ $data = $client->market()->cancel('251c48e7-95d4-d53f-ad76-a7c6547b74ca9');
 
 #### Get all orders that you currently have opened
 ```php
-$data = $client->market()->getOpenOrders('BTC-LTC');
+$data = $client->market()->getOpenOrders('LTC-BTC');
 ```
 
 ### Account API
@@ -131,7 +131,7 @@ $data = $client->account()->getOrder('251c48e7-95d4-d53f-ad76-a7c6547b74ca9');
 
 #### Get order history
 ```php
-$data = $client->account()->getOrderHistory('BTC-LTC');
+$data = $client->account()->getOrderHistory('LTC-BTC');
 ```
 
 #### Get withdrawal history

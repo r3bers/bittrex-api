@@ -90,6 +90,22 @@ class Account extends Api
 
 
     /**
+     * @param string $whatHistory
+     * @param string $currencySymbol
+     * @param string $status
+     * @return array
+     * @throws Exception
+     */
+    private function getHistory(string $whatHistory, ?string  $currencySymbol, ?string $status): array
+    {
+        $parameters = [];
+
+        if (!is_null($currencySymbol)) $parameters['currencySymbol'] = $currencySymbol;
+        if (!is_null($status)) $parameters['status'] = $status;
+
+        return $this->get('/'.$whatHistory.'/closed', $parameters);
+     }
+    /**
      * @param string|null $currencySymbol
      * @param string|null $status
      * @return array
@@ -97,12 +113,7 @@ class Account extends Api
      */
     public function getWithdrawalHistory(?string $currencySymbol = null, ?string $status = null): array
     {
-        $parameters = [];
-
-        if (!is_null($currencySymbol)) $parameters['currencySymbol'] = $currencySymbol;
-        if (!is_null($status)) $parameters['status'] = $status;
-
-        return $this->get('/withdrawals/closed', $parameters);
+        return $this->getHistory('withdrawals', $currencySymbol, $status);
     }
 
     /**
@@ -113,11 +124,6 @@ class Account extends Api
      */
     public function getDepositHistory(?string $currencySymbol = null, ?string $status = null): array
     {
-        $parameters = [];
-
-        if (!is_null($currencySymbol)) $parameters['currencySymbol'] = $currencySymbol;
-        if (!is_null($status)) $parameters['status'] = $status;
-
-        return $this->get('/deposits/closed', $parameters);
+        return $this->getHistory('deposits', $currencySymbol, $status);
     }
 }

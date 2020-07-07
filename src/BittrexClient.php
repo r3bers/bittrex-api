@@ -90,7 +90,7 @@ class BittrexClient
             throw new InvalidCredentialException('Key and secret must be set for authenticated API');
         }
         $stack = HandlerStack::create();
-        $stack->push(new Authentication($this->getKey(), $this->getSecret(), self::BASE_URI));
+        $stack->push(new Authentication($this->getKey(), $this->getSecret()));
 
         return new Client(['handler' => $stack, 'base_uri' => self::BASE_URI]);
     }

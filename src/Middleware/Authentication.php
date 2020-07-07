@@ -46,13 +46,15 @@ class Authentication
                 $contentHash .
                 $this->subaccountId;
             $sign = $this->generateSign($pre_sign);
-            $request = $request->withAddedHeader('Api-Key', $this->key);
-            $request = $request->withAddedHeader('Api-Timestamp', $timestamp);
-            $request = $request->withAddedHeader('Api-Content-Hash', $contentHash);
-            $request = $request->withAddedHeader('Api-Signature', $sign);
-            if (!is_null($this->subaccountId)) {
-                $request = $request->withAddedHeader('Api-Subaccount-Id', $this->subaccountId);
-            }
+            $newHeaders = [
+                'Api-Key' => $this->key,
+                'Api-Timestamp' => $timestamp,
+                'Api-Content-Hash' => $contentHash,
+                'Api-Signature' => $sign
+            ];
+            foreach ($newHeaders as $key => $value) $request = $request->withAddedHeader($key, $value);
+            if (!is_null($this->subaccountId)) $request = $request->withAddedHeader('Api-Subaccount-Id', $this->subaccountId);
+
             return $next($request, $options);
         };
     }
@@ -74,6 +76,5 @@ class Authentication
     {
         return hash_hmac('sha512', $preSign, $this->secret);
     }
-
 
 }

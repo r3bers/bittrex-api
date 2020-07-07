@@ -24,7 +24,7 @@ class Authentication
      * @param string $secret
      * @param string $subaccountId
      */
-    public function __construct(string $key, string $secret, string $subaccountId = '')
+    public function __construct(string $key, string $secret, ?string $subaccountId = null)
     {
         $this->key = $key;
         $this->secret = $secret;
@@ -50,8 +50,9 @@ class Authentication
             $request = $request->withAddedHeader('Api-Timestamp', $timestamp);
             $request = $request->withAddedHeader('Api-Content-Hash', $contentHash);
             $request = $request->withAddedHeader('Api-Signature', $sign);
-            $request = $request->withAddedHeader('Api-Subaccount-Id', $this->subaccountId);
-
+            if (!is_null($this->subaccountId)) {
+                $request = $request->withAddedHeader('Api-Subaccount-Id', $this->subaccountId);
+            }
             return $next($request, $options);
         };
     }

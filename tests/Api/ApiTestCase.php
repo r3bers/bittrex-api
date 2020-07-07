@@ -35,7 +35,7 @@ class ApiTestCase extends TestCase
 
         $handlerStack = HandlerStack::create($mock);
 
-        if ($isPrivateClient) $handlerStack->push(new Authentication('API_KEY', 'API_SECRET', 'https://api.bittrex.com'));
+        if ($isPrivateClient) $handlerStack->push(new Authentication('API_KEY', 'API_SECRET'));
 
         $handlerStack->push(Middleware::history($this->transactions));
         $this->mockClient = new Client(['handler' => $handlerStack]);

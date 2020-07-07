@@ -18,22 +18,17 @@ class Authentication
     /** @var string */
     private $subaccountId;
 
-    /** @var string */
-    private $baseUri;
-
     /**
      * Authentication constructor.
      * @param string $key
      * @param string $secret
-     * @param string $baseUri
      * @param string $subaccountId
      */
-    public function __construct(string $key, string $secret, string $baseUri, string $subaccountId = '')
+    public function __construct(string $key, string $secret, string $subaccountId = '')
     {
         $this->key = $key;
         $this->secret = $secret;
         $this->subaccountId = $subaccountId;
-        $this->baseUri = $baseUri;
     }
 
     /**
@@ -46,7 +41,6 @@ class Authentication
             $timestamp = round(microtime(true) * 1000);
             $contentHash = $this->generateContentHash($request->getBody()->__toString());
             $pre_sign = $timestamp .
-                $this->baseUri .
                 $request->getUri()->__toString() .
                 $request->getMethod() .
                 $contentHash .

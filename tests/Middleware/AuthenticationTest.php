@@ -13,7 +13,7 @@ class AuthenticationTest extends TestCase
 {
     private const API_KEY = 'API_KEY';
     private const API_SECRET = 'API_SECRET';
-    private const BASE_URI = 'https://api.bittrex.com';
+    //private const BASE_URI = 'https://api.bittrex.com';
     private const URI = '/v3/account/getbalances';
     private const METHOD = 'GET';
 
@@ -28,7 +28,7 @@ class AuthenticationTest extends TestCase
 
     private function getHandledRequest(RequestInterface $request): RequestInterface
     {
-        $middleware = new Authentication(self::API_KEY, self::API_SECRET, self::BASE_URI);
+        $middleware = new Authentication(self::API_KEY, self::API_SECRET);
         return $middleware(function (RequestInterface $request) {
             return $request;
         })($request);
@@ -48,10 +48,9 @@ class AuthenticationTest extends TestCase
         $this->assertNotEmpty($request->getHeaderLine('Api-Timestamp'));
 
         $pre_sign = $request->getHeaderLine('Api-Timestamp') .
-            self::BASE_URI .
             self::URI .
             self::METHOD .
-            hash('sha512', '');
+            hash('sha512', $request->getBody()->__toString());
 
         $sign = hash_hmac('sha512', $pre_sign, self::API_SECRET);
 

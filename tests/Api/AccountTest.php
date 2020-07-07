@@ -71,6 +71,27 @@ class AccountTest extends ApiTestCase
         $this->assertNotEmpty($request->getHeaderLine('Api-Signature'));
     }
 
+    public function testSetDepositAddress()
+    {
+        $this->createApi()->setDepositAddress('BTC');
+        $request = $this->getLastRequest();
+
+        $this->assertEquals(
+            '/v3/addresses',
+            $request->getUri()->__toString()
+        );
+        $this->assertEquals(
+            'API_KEY',
+            $request->getHeaderLine('Api-Key')
+        );
+        $this->assertEquals(
+            hash('sha512',$request->getBody()->__toString()),
+            $request->getHeaderLine('Api-Content-Hash')
+        );
+        $this->assertNotEmpty($request->getHeaderLine('Api-Timestamp'));
+        $this->assertNotEmpty($request->getHeaderLine('Api-Signature'));
+    }
+
     public function testWithdraw()
     {
         $this->createApi()->withdraw('BTC', 1.40, '12rwaw7p4eTQ3DL5gu4fSYYx3M3kZxxQVn', 'paymentId');

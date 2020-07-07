@@ -43,6 +43,20 @@ class Account extends Api
 
     /**
      * @param string $currency
+     * @return array
+     * @throws Exception
+     */
+    public function setDepositAddress(string $currency): array
+    {
+        $NewAddress = [
+            'currencySymbol' => $currency
+        ];
+
+        return $this->post('/addresses', json_encode($NewAddress));
+    }
+
+    /**
+     * @param string $currency
      * @param float $quantity
      * @param string $address
      * @param string|null $paymentId
@@ -88,23 +102,6 @@ class Account extends Api
         return $this->get('/orders/closed', $parameters);
     }
 
-
-    /**
-     * @param string $whatHistory
-     * @param string $currencySymbol
-     * @param string $status
-     * @return array
-     * @throws Exception
-     */
-    private function getHistory(string $whatHistory, ?string  $currencySymbol, ?string $status): array
-    {
-        $parameters = [];
-
-        if (!is_null($currencySymbol)) $parameters['currencySymbol'] = $currencySymbol;
-        if (!is_null($status)) $parameters['status'] = $status;
-
-        return $this->get('/'.$whatHistory.'/closed', $parameters);
-     }
     /**
      * @param string|null $currencySymbol
      * @param string|null $status
@@ -114,6 +111,23 @@ class Account extends Api
     public function getWithdrawalHistory(?string $currencySymbol = null, ?string $status = null): array
     {
         return $this->getHistory('withdrawals', $currencySymbol, $status);
+    }
+
+    /**
+     * @param string $whatHistory
+     * @param string $currencySymbol
+     * @param string $status
+     * @return array
+     * @throws Exception
+     */
+    private function getHistory(string $whatHistory, ?string $currencySymbol, ?string $status): array
+    {
+        $parameters = [];
+
+        if (!is_null($currencySymbol)) $parameters['currencySymbol'] = $currencySymbol;
+        if (!is_null($status)) $parameters['status'] = $status;
+
+        return $this->get('/' . $whatHistory . '/closed', $parameters);
     }
 
     /**

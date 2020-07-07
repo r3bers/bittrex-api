@@ -117,6 +117,7 @@ $data = $client->account()->getBalance('BTC');
 #### Get or generate an address for a specific currency
 ```php
 $data = $client->account()->getDepositAddress('BTC');
+$data = $client->account()->setDepositAddress('BTC');
 ```
 
 #### Withdraw funds from your account

@@ -26,7 +26,7 @@ $ composer require r3bers/bittrex-api
 or add
 
 ```json
-"r3bers/bittrex-api" : "^1.0"
+"r3bers/bittrex-api" : "^1.3"
 ```
 
 to require the section of your application's `composer.json` file.
@@ -146,8 +146,7 @@ $data = $client->account()->getDepositHistory('BTC');
 ```
 
 ## Further Information
-Please, check the [Bittrex site](https://bittrex.github.io/api/v3) documentation for further
-information about API.
+Please, check the [Bittrex site](https://bittrex.github.io/api/v3) documentation for further information about API.
 
 ## License
 

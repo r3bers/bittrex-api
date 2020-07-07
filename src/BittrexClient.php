@@ -59,7 +59,14 @@ class BittrexClient
      */
     private function createPublicClient(): Client
     {
-        return new Client(['base_uri' => self::BASE_URI]);
+        return new Client([
+            'headers' => [
+                'User-Agent' => 'r3bers/bittrex-api/1.3',
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json'
+            ],
+            'base_uri' => self::BASE_URI
+        ]);
     }
 
     /**
@@ -92,7 +99,15 @@ class BittrexClient
         $stack = HandlerStack::create();
         $stack->push(new Authentication($this->getKey(), $this->getSecret()));
 
-        return new Client(['handler' => $stack, 'base_uri' => self::BASE_URI]);
+        return new Client([
+            'headers' => [
+                'User-Agent' => 'r3bers/bittrex-api/1.3',
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json'
+            ],
+            'handler' => $stack,
+            'base_uri' => self::BASE_URI
+        ]);
     }
 
     /**

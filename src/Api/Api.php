@@ -33,45 +33,17 @@ class Api
     }
 
     /**
+     * @param string $method
      * @param string $uri
-     * @param array $query
+     * @param array $options
      * @return array
      * @throws Exception
      */
-    public function get(string $uri, array $query = []): array
+    public function rest(string $method, string $uri, array $options = []): array
     {
-        $response = $this->client->request('GET', $this->endpoint . $this->version
-            . $uri, ['query' => $query]);
+        $response = $this->client->request($method, $this->endpoint . $this->version . $uri, $options);
 
         return $this->transformer->transform($response);
     }
 
-    /**
-     * @param string $uri
-     * @param string $body
-     * @return array
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \R3bers\BittrexApi\Exception\TransformResponseException
-     */
-    public function post(string $uri, string $body = ''): array
-    {
-        $response = $this->client->request('POST', $this->endpoint . $this->version
-            . $uri, ['body' => $body]);
-
-        return $this->transformer->transform($response);
-    }
-
-    /**
-     * @param string $uri
-     * @param array $query
-     * @return array
-     * @throws Exception
-     */
-    public function delete(string $uri, array $query = []): array
-    {
-        $response = $this->client->request('DELETE', $this->endpoint . $this->version
-            . $uri, ['query' => $query]);
-
-        return $this->transformer->transform($response);
-    }
 }

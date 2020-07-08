@@ -18,7 +18,7 @@ class PublicApi extends Api
      */
     public function getMarkets(): array
     {
-        return $this->get('/markets');
+        return $this->rest('GET', '/markets');
     }
 
     /**
@@ -27,7 +27,7 @@ class PublicApi extends Api
      */
     public function getCurrencies(): array
     {
-        return $this->get('/currencies');
+        return $this->rest('GET', '/currencies');
     }
 
     /**
@@ -37,7 +37,7 @@ class PublicApi extends Api
      */
     public function getTicker(string $market): array
     {
-        return $this->get('/markets/' . $market . '/ticker');
+        return $this->rest('GET', '/markets/' . $market . '/ticker');
     }
 
     /**
@@ -46,7 +46,7 @@ class PublicApi extends Api
      */
     public function getMarketSummaries(): array
     {
-        return $this->get('/markets/summaries');
+        return $this->rest('GET', '/markets/summaries');
     }
 
     /**
@@ -56,7 +56,7 @@ class PublicApi extends Api
      */
     public function getMarketSummary(string $market): array
     {
-        return $this->get('/markets/' . $market . '/summary');
+        return $this->rest('GET', '/markets/' . $market . '/summary');
     }
 
     /**
@@ -67,9 +67,9 @@ class PublicApi extends Api
      */
     public function getOrderBook(string $market, $depth = 25): array
     {
-        $parameters = ['depth' => $depth];
+        $options = ['query' => ['depth' => $depth]];
 
-        return $this->get('/markets/' . $market . '/orderbook', $parameters);
+        return $this->rest('GET', '/markets/' . $market . '/orderbook', $options);
     }
 
     /**
@@ -79,6 +79,16 @@ class PublicApi extends Api
      */
     public function getMarketHistory(string $market)
     {
-        return $this->get('/markets/' . $market . '/trades');
+        return $this->rest('GET', '/markets/' . $market . '/trades');
     }
+
+    /**
+     * @return array
+     * @throws Exception
+     */
+    public function ping(): array
+    {
+        return $this->rest('GET', '/ping');
+    }
+
 }

@@ -18,7 +18,7 @@ class Account extends Api
      */
     public function getBalances(): array
     {
-        return $this->get('/balances');
+        return $this->rest('GET', '/balances');
     }
 
     /**
@@ -28,7 +28,7 @@ class Account extends Api
      */
     public function getBalance(string $currency): array
     {
-        return $this->get('/balances/' . $currency);
+        return $this->rest('GET', '/balances/' . $currency);
     }
 
     /**
@@ -38,7 +38,7 @@ class Account extends Api
      */
     public function getDepositAddress(string $currency): array
     {
-        return $this->get('/addresses/' . $currency);
+        return $this->rest('GET', '/addresses/' . $currency);
     }
 
     /**
@@ -48,11 +48,9 @@ class Account extends Api
      */
     public function setDepositAddress(string $currency): array
     {
-        $NewAddress = [
-            'currencySymbol' => $currency
-        ];
+        $options = ['body' => json_encode(['currencySymbol' => $currency])];
 
-        return $this->post('/addresses', json_encode($NewAddress));
+        return $this->rest('POST', '/addresses', $options);
     }
 
     /**
@@ -75,7 +73,8 @@ class Account extends Api
             $newWithdrawal['cryptoAddressTag'] = $paymentId;
         }
 
-        return $this->post('/withdrawals', json_encode($newWithdrawal));
+        $options = ['body' => json_encode($newWithdrawal)];
+        return $this->rest('POST', '/withdrawals', $options);
     }
 
     /**
@@ -85,7 +84,7 @@ class Account extends Api
      */
     public function getOrder(string $uuid): array
     {
-        return $this->get('/orders/' . $uuid);
+        return $this->rest('GET', '/orders/' . $uuid);
     }
 
     /**
@@ -95,11 +94,10 @@ class Account extends Api
      */
     public function getOrderHistory(?string $marketSymbol = null): array
     {
-        $parameters = [];
+        $options = [];
+        if (!is_null($marketSymbol)) $options['query'] = ['marketSymbol' => $marketSymbol];
 
-        if (!is_null($marketSymbol)) $parameters['marketSymbol'] = $marketSymbol;
-
-        return $this->get('/orders/closed', $parameters);
+        return $this->rest('GET', '/orders/closed', $options);
     }
 
     /**
@@ -122,12 +120,12 @@ class Account extends Api
      */
     private function getHistory(string $whatHistory, ?string $currencySymbol, ?string $status): array
     {
-        $parameters = [];
+        $options = [];
 
-        if (!is_null($currencySymbol)) $parameters['currencySymbol'] = $currencySymbol;
-        if (!is_null($status)) $parameters['status'] = $status;
+        if (!is_null($currencySymbol)) $options['query'] = ['currencySymbol' => $currencySymbol];
+        if (!is_null($status)) $options['query'] = ['status' => $status];
 
-        return $this->get('/' . $whatHistory . '/closed', $parameters);
+        return $this->rest('GET', '/' . $whatHistory . '/closed', $options);
     }
 
     /**

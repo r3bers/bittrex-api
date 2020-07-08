@@ -32,8 +32,9 @@ class Market extends Api
             'useAwards' => $useAwards
 
         ];
+        $options = ['body' => json_encode($newOrder)];
 
-        return $this->post('/orders', json_encode($newOrder));
+        return $this->rest('POST', '/orders', $options);
     }
 
     /**
@@ -56,8 +57,9 @@ class Market extends Api
             'useAwards' => $useAwards
 
         ];
+        $options = ['body' => json_encode($newOrder)];
 
-        return $this->post('/orders', json_encode($newOrder));
+        return $this->rest('POST', '/orders', $options);
     }
 
     /**
@@ -67,7 +69,7 @@ class Market extends Api
      */
     public function cancel(string $uuid): array
     {
-        return $this->delete('/orders/' . $uuid);
+        return $this->rest('DELETE', '/orders/' . $uuid);
     }
 
     /**
@@ -77,12 +79,9 @@ class Market extends Api
      */
     public function getOpenOrders(?string $market = null): array
     {
-        $parameters = [];
+        $options = [];
+        if (!is_null($market)) $options['query'] = ['marketSymbol' => $market];
 
-        if (!is_null($market)) {
-            $parameters['marketSymbol'] = $market;
-        }
-
-        return $this->get('/orders/open', $parameters);
+        return $this->rest('GET', '/orders/open', $options);
     }
 }

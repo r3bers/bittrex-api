@@ -63,6 +63,14 @@ class PublicApiTest extends ApiTestCase
         $this->assertEquals('/v3/markets/BTC-LTC/trades', $request->getUri()->__toString());
     }
 
+    public function testPing()
+    {
+        $this->createApi()->ping();
+
+        $request = $this->getLastRequest();
+        $this->assertEquals('/v3/ping', $request->getUri()->__toString());
+    }
+
     private function createApi(): PublicApi
     {
         return new PublicApi($this->getMockClient());

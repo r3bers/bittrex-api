@@ -80,6 +80,11 @@ $data = $client->public()->getOrderBook('LTC-BTC');
 $data = $client->public()->getMarketHistory('LTC-BTC');
 ```
 
+#### Ping Bittrex
+```php
+$data = $client->public()->ping();
+```
+
 ### Market API
 
 #### Place a buy order in a specific market

@@ -35,6 +35,16 @@ class PublicApi extends Api
      * @return array
      * @throws Exception
      */
+    public function getTickers(): array
+    {
+        return $this->rest('HEAD', '/markets/tickers');
+    }
+
+    /**
+     * @param string $market
+     * @return array
+     * @throws Exception
+     */
     public function getTicker(string $market): array
     {
         return $this->rest('GET', '/markets/' . $market . '/ticker');

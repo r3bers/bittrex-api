@@ -24,6 +24,13 @@ class PublicApiTest extends ApiTestCase
         $this->assertEquals('/v3/currencies', $request->getUri()->__toString());
     }
 
+    public function testGetTickers()
+    {
+        $this->createApi()->getTickers();
+        $request = $this->getLastRequest();
+        $this->assertEquals('/v3/markets/tickers', $request->getUri()->__toString());
+    }
+
     public function testGetTicker()
     {
         $this->createApi()->getTicker('BTC-LTC');

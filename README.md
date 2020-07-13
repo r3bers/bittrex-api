@@ -58,14 +58,15 @@ $data = $client->public()->getCurrencies();
 
 #### Get the current tick values for a market
 ```php
+$data = $client->public()->getTickers();
 $data = $client->public()->getTicker('LTC-BTC');
 ```
-#### Get the last 24 hour summary of all active exchanges
+#### Get the last 24-hour summary of all active exchanges
 ```php
 $data = $client->public()->getMarketSummaries();
 ```
 
-#### Get the last 24 hour summary of all active exchanges for a market
+#### Get the last 24-hour summary of all active exchanges for a market
 ```php
 $data = $client->public()->getMarketSummary('LTC-BTC');
 ```
@@ -75,7 +76,7 @@ $data = $client->public()->getMarketSummary('LTC-BTC');
 $data = $client->public()->getOrderBook('LTC-BTC');
 ```
 
-#### Get latest trades that have occurred for a specific market
+#### Get the latest trades that have occurred for a specific market
 ```php
 $data = $client->public()->getMarketHistory('LTC-BTC');
 ```

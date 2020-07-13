@@ -36,7 +36,7 @@ class PublicApi extends Api
      */
     public function getTickers(): array
     {
-        return $this->rest('HEAD', '/markets/tickers');
+        return $this->rest('GET', '/markets/tickers');
     }
 
     /**

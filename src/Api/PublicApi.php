@@ -31,7 +31,6 @@ class PublicApi extends Api
     }
 
     /**
-     * @param string $market
      * @return array
      * @throws Exception
      */

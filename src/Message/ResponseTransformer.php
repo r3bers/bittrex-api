@@ -23,6 +23,7 @@ class ResponseTransformer
     public function transform(ResponseInterface $response, ?bool $needHeader = null, ?bool $noBody = null): array
     {
         $content = [];
+
         if (is_null($noBody) or !$noBody) {
             $body = (string)$response->getBody();
             if (strpos($response->getHeaderLine('Content-Type'), 'application/json') === 0) {
@@ -32,9 +33,11 @@ class ResponseTransformer
             } else
                 throw new TransformResponseException('Error transforming response to array. Content-Type is not application/json');
         }
+
         if (!is_null($needHeader) and $needHeader) {
             $content['responseHeaders'] = $response->getHeaders();
         }
+
         return $content;
     }
 }

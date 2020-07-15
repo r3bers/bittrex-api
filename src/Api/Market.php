@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace R3bers\BittrexApi\Api;
 
-use Exception;
+use GuzzleHttp\Exception\GuzzleException;
+use R3bers\BittrexApi\Exception\TransformResponseException;
 
 /**
  * Class Market
@@ -18,7 +19,7 @@ class Market extends Api
      * @param float $rate
      * @param bool $useAwards
      * @return array
-     * @throws Exception
+     * @throws GuzzleException|TransformResponseException
      */
     public function buyLimit(string $market, float $quantity, float $rate, $useAwards = true): array
     {
@@ -43,7 +44,7 @@ class Market extends Api
      * @param float $rate
      * @param bool $useAwards
      * @return array
-     * @throws Exception
+     * @throws GuzzleException|TransformResponseException
      */
     public function sellLimit(string $market, float $quantity, float $rate, $useAwards = true): array
     {
@@ -65,7 +66,7 @@ class Market extends Api
     /**
      * @param string $uuid
      * @return array
-     * @throws Exception
+     * @throws GuzzleException|TransformResponseException
      */
     public function cancel(string $uuid): array
     {
@@ -74,14 +75,28 @@ class Market extends Api
 
     /**
      * @param string|null $market
+     * @param bool|null $needHeader
      * @return array
-     * @throws Exception
+     * @throws GuzzleException|TransformResponseException
      */
-    public function getOpenOrders(?string $market = null): array
+    public function getOpenOrders(?string $market = null, ?bool $needHeader = null): array
     {
         $options = [];
         if (!is_null($market)) $options['query'] = ['marketSymbol' => $market];
 
-        return $this->rest('GET', '/orders/open', $options);
+        return $this->rest('GET', '/orders/open', $options, $needHeader);
+    }
+
+    /**
+     * @param string|null $market
+     * @return array
+     * @throws GuzzleException|TransformResponseException
+     */
+    public function headOpenOrders(?string $market = null): array
+    {
+        $options = [];
+        if (!is_null($market)) $options['query'] = ['marketSymbol' => $market];
+
+        return $this->rest('HEAD', '/orders/open', $options, true);
     }
 }

@@ -28,10 +28,12 @@ class ResponseTransformer
             $body = (string)$response->getBody();
             if (strpos($response->getHeaderLine('Content-Type'), 'application/json') === 0) {
                 $content = json_decode($body, true);
-                if (!(JSON_ERROR_NONE === json_last_error()))
+                if (!(JSON_ERROR_NONE === json_last_error())) {
                     throw new TransformResponseException('Error transforming response to array. JSON_ERROR: ' . json_last_error());
-            } else
+                }
+            } else {
                 throw new TransformResponseException('Error transforming response to array. Content-Type is not application/json');
+            }
         }
 
         if (!is_null($needHeader) and $needHeader) {

@@ -34,6 +34,8 @@ class ResponseTransformer
             } else {
                 throw new TransformResponseException('Error transforming response to array. Content-Type is not application/json');
             }
+        } else {
+            $needHeader = true;
         }
 
         if (!is_null($needHeader) and $needHeader) {

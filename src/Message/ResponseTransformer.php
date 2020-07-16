@@ -28,7 +28,7 @@ class ResponseTransformer
             $body = (string)$response->getBody();
             if (strpos($response->getHeaderLine('Content-Type'), 'application/json') === 0) {
                 $content = json_decode($body, true);
-                if (!(JSON_ERROR_NONE === json_last_error())) {
+                if (json_last_error() != JSON_ERROR_NONE) {
                     throw new TransformResponseException('Error transforming response to array. JSON_ERROR: ' . json_last_error());
                 }
             } else {

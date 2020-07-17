@@ -30,7 +30,7 @@ class ResponseTransformer
             $content['Sequence'] = (int)$responseHeaders['Sequence'][0];
         }
 
-        if (!(isset($onlyHeader) and $onlyHeader)) {
+        if (!$onlyHeader) {
             if (!(strpos($response->getHeaderLine('Content-Type'), 'application/json') === 0))
                 throw new TransformResponseException('Error transforming response to array. Content-Type is not application/json');
             $body = (string)$response->getBody();

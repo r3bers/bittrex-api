@@ -84,7 +84,7 @@ class Market extends Api
         $options = [];
         if (!is_null($market)) $options['query'] = ['marketSymbol' => $market];
 
-        return $this->rest('GET', '/orders/open', $options, (isset($needSequence) and $needSequence) ? false : null);
+        return $this->rest('GET', '/orders/open', $options, ($needSequence));
     }
 
     /**

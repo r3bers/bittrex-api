@@ -37,19 +37,17 @@ class Api
      * @param string $method
      * @param string $uri
      * @param array $options
-     * @param bool|null $onlyHeader
-     * null — When only body return
-     * false — When response header in return data with body
-     * true — When only header return
+     * @param bool|null $needSequence
      * @return array
      * @throws GuzzleException
      * @throws TransformResponseException
      */
-    public function rest(string $method, string $uri, array $options = [], ?bool $onlyHeader = null): array
+    public function rest(string $method, string $uri, array $options = [], ?bool $needSequence = null): array
     {
         $response = $this->client->request($method, $this->endpoint . $this->version . $uri, $options);
-
-        if ($method === 'HEAD') $onlyHeader = true;
-        return $this->transformer->transform($response, $onlyHeader);
+        if ($method === 'HEAD')
+            return $this->transformer->transformHeader($response);
+        else
+            return $this->transformer->transform($response, $needSequence);
     }
 }

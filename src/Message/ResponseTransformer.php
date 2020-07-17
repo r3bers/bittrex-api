@@ -23,14 +23,14 @@ class ResponseTransformer
     {
         $content = [];
 
-        if (isset($onlyHeader)) {
+        if (!is_null($onlyHeader)) {
             $responseHeaders = $response->getHeaders();
             if (!(isset($responseHeaders['Sequence'][0]) and is_numeric($responseHeaders['Sequence'][0])))
                 throw new TransformResponseException('Error getting sequence from response headers.');
             $content['Sequence'] = (int)$responseHeaders['Sequence'][0];
         }
 
-        if (!$onlyHeader) {
+        if (is_null($onlyHeader) or !$onlyHeader) {
             if (!(strpos($response->getHeaderLine('Content-Type'), 'application/json') === 0))
                 throw new TransformResponseException('Error transforming response to array. Content-Type is not application/json');
             $body = (string)$response->getBody();

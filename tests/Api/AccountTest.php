@@ -22,11 +22,16 @@ class AccountTest extends ApiTestCase
             $request->getHeaderLine('Api-Key')
         );
         $this->assertEquals(
-            hash('sha512',''),
+            hash('sha512', ''),
             $request->getHeaderLine('Api-Content-Hash')
         );
         $this->assertNotEmpty($request->getHeaderLine('Api-Timestamp'));
         $this->assertNotEmpty($request->getHeaderLine('Api-Signature'));
+    }
+
+    private function createApi(): Account
+    {
+        return new Account($this->getMockClient(true));
     }
 
     public function testGetBalance()
@@ -43,7 +48,7 @@ class AccountTest extends ApiTestCase
             $request->getHeaderLine('Api-Key')
         );
         $this->assertEquals(
-            hash('sha512',''),
+            hash('sha512', ''),
             $request->getHeaderLine('Api-Content-Hash')
         );
         $this->assertNotEmpty($request->getHeaderLine('Api-Timestamp'));
@@ -64,7 +69,7 @@ class AccountTest extends ApiTestCase
             $request->getHeaderLine('Api-Key')
         );
         $this->assertEquals(
-            hash('sha512',''),
+            hash('sha512', ''),
             $request->getHeaderLine('Api-Content-Hash')
         );
         $this->assertNotEmpty($request->getHeaderLine('Api-Timestamp'));
@@ -85,7 +90,7 @@ class AccountTest extends ApiTestCase
             $request->getHeaderLine('Api-Key')
         );
         $this->assertEquals(
-            hash('sha512',$request->getBody()->__toString()),
+            hash('sha512', $request->getBody()->__toString()),
             $request->getHeaderLine('Api-Content-Hash')
         );
         $this->assertNotEmpty($request->getHeaderLine('Api-Timestamp'));
@@ -106,7 +111,7 @@ class AccountTest extends ApiTestCase
             $request->getHeaderLine('Api-Key')
         );
         $this->assertEquals(
-            hash('sha512',$request->getBody()->__toString()),
+            hash('sha512', $request->getBody()->__toString()),
             $request->getHeaderLine('Api-Content-Hash')
         );
         $this->assertNotEmpty($request->getHeaderLine('Api-Timestamp'));
@@ -127,7 +132,7 @@ class AccountTest extends ApiTestCase
             $request->getHeaderLine('Api-Key')
         );
         $this->assertEquals(
-            hash('sha512',''),
+            hash('sha512', ''),
             $request->getHeaderLine('Api-Content-Hash')
         );
         $this->assertNotEmpty($request->getHeaderLine('Api-Timestamp'));
@@ -148,7 +153,7 @@ class AccountTest extends ApiTestCase
             $request->getHeaderLine('Api-Key')
         );
         $this->assertEquals(
-            hash('sha512',''),
+            hash('sha512', ''),
             $request->getHeaderLine('Api-Content-Hash')
         );
         $this->assertNotEmpty($request->getHeaderLine('Api-Timestamp'));
@@ -169,7 +174,7 @@ class AccountTest extends ApiTestCase
             $request->getHeaderLine('Api-Key')
         );
         $this->assertEquals(
-            hash('sha512',''),
+            hash('sha512', ''),
             $request->getHeaderLine('Api-Content-Hash')
         );
         $this->assertNotEmpty($request->getHeaderLine('Api-Timestamp'));
@@ -190,15 +195,10 @@ class AccountTest extends ApiTestCase
             $request->getHeaderLine('Api-Key')
         );
         $this->assertEquals(
-            hash('sha512',''),
+            hash('sha512', ''),
             $request->getHeaderLine('Api-Content-Hash')
         );
         $this->assertNotEmpty($request->getHeaderLine('Api-Timestamp'));
         $this->assertNotEmpty($request->getHeaderLine('Api-Signature'));
-    }
-
-    private function createApi(): Account
-    {
-        return new Account($this->getMockClient(true));
     }
 }

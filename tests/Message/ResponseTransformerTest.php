@@ -58,6 +58,6 @@ class ResponseTransformerTest extends TestCase
 
         $this->expectException(TransformResponseException::class);
 
-        $this->assertEquals($data, $transformer->transform($response,true));
+        $this->assertEquals($data, $transformer->transform($response, true));
     }
 }

@@ -21,33 +21,24 @@ class ResponseTransformer
      */
     public function transform(ResponseInterface $response, ?bool $onlyHeader = null): array
     {
-
         $content = [];
 
         if (isset($onlyHeader)) {
             $responseHeaders = $response->getHeaders();
-            if (isset($responseHeaders['Sequence'][0]) and is_numeric($responseHeaders['Sequence'][0])) {
-                $content['Sequence'] = (int)$responseHeaders['Sequence'][0];
-            }else{
+            if (!(isset($responseHeaders['Sequence'][0]) and is_numeric($responseHeaders['Sequence'][0])))
                 throw new TransformResponseException('Error getting sequence from response headers.');
-            }
+            $content['Sequence'] = (int)$responseHeaders['Sequence'][0];
         }
 
-        if (is_null($onlyHeader) or !$onlyHeader) {
-            if (strpos($response->getHeaderLine('Content-Type'), 'application/json') === 0) {
-                $body = (string)$response->getBody();
-                $bodyArray = json_decode($body, true);
-                if (json_last_error() != JSON_ERROR_NONE) {
-                    throw new TransformResponseException('Error transforming response to array. JSON_ERROR: ' . json_last_error());
-                } else {
-                    $content = array_merge($content, $bodyArray);
-                }
-            } else {
+        if (!(isset($onlyHeader) and $onlyHeader)) {
+            if (!(strpos($response->getHeaderLine('Content-Type'), 'application/json') === 0))
                 throw new TransformResponseException('Error transforming response to array. Content-Type is not application/json');
-            }
+            $body = (string)$response->getBody();
+            $bodyArray = json_decode($body, true);
+            if (json_last_error() != JSON_ERROR_NONE)
+                throw new TransformResponseException('Error transforming response to array. JSON_ERROR: ' . json_last_error());
+            $content = array_merge($content, $bodyArray);
         }
-
         return $content;
-
     }
 }

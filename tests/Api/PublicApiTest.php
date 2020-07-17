@@ -16,6 +16,11 @@ class PublicApiTest extends ApiTestCase
         $this->assertEquals('/v3/markets', $request->getUri()->__toString());
     }
 
+    private function createApi(): PublicApi
+    {
+        return new PublicApi($this->getMockClient());
+    }
+
     public function testGetCurrencies()
     {
         $this->createApi()->getCurrencies();
@@ -76,10 +81,5 @@ class PublicApiTest extends ApiTestCase
 
         $request = $this->getLastRequest();
         $this->assertEquals('/v3/ping', $request->getUri()->__toString());
-    }
-
-    private function createApi(): PublicApi
-    {
-        return new PublicApi($this->getMockClient());
     }
 }

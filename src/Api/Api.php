@@ -52,5 +52,4 @@ class Api
         if ($method === 'HEAD') $onlyHeader = true;
         return $this->transformer->transform($response, $onlyHeader);
     }
-
 }

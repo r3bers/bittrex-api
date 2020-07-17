@@ -49,4 +49,15 @@ class ResponseTransformerTest extends TestCase
 
         $this->assertEquals($data, $transformer->transform($response));
     }
+
+    public function testTransformWithIncorrectSequence()
+    {
+        $transformer = new ResponseTransformer();
+        $data = [];
+        $response = new Response(200, ['Content-Length' => '0', 'Sequence' => ['abc']], json_encode($data));
+
+        $this->expectException(TransformResponseException::class);
+
+        $this->assertEquals($data, $transformer->transform($response));
+    }
 }

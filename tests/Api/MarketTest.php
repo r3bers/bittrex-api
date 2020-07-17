@@ -142,25 +142,4 @@ class MarketTest extends ApiTestCase
         $this->assertNotEmpty($request->getHeaderLine('Api-Signature'));
     }
 
-    public function testHeadOpenOrdersWithMarket()
-    {
-        $this->createApi()->headOpenOrders('BTC-LTC');
-
-        $request = $this->getLastRequest();
-        $this->assertEquals('HEAD', $request->getMethod());
-        $this->assertEquals(
-            '/v3/orders/open?marketSymbol=BTC-LTC',
-            $request->getUri()->__toString()
-        );
-        $this->assertEquals(
-            'API_KEY',
-            $request->getHeaderLine('Api-Key')
-        );
-        $this->assertEquals(
-            hash('sha512', ''),
-            $request->getHeaderLine('Api-Content-Hash')
-        );
-        $this->assertNotEmpty($request->getHeaderLine('Api-Timestamp'));
-        $this->assertNotEmpty($request->getHeaderLine('Api-Signature'));
-    }
 }

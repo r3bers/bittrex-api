@@ -30,7 +30,7 @@ class ApiTestCase extends TestCase
     protected function getMockClient($isPrivateClient = false)
     {
         $mock = new MockHandler([
-            new Response(200, ['Content-Type' => 'application/json'], json_encode(['fo' => 'bar'])),
+            new Response(200, ['Content-Type' => 'application/json', 'Sequence' => ['42']], json_encode(['fo' => 'bar'])),
         ]);
 
         $handlerStack = HandlerStack::create($mock);

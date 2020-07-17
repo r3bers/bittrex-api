@@ -75,28 +75,26 @@ class Market extends Api
 
     /**
      * @param string|null $market
-     * @param bool|null $needHeader
+     * @param bool|null $needSequence if true additional member of array named Sequence added to return
      * @return array
      * @throws GuzzleException|TransformResponseException
      */
-    public function getOpenOrders(?string $market = null, ?bool $needHeader = null): array
+    public function getOpenOrders(?string $market = null, ?bool $needSequence = null): array
     {
         $options = [];
         if (!is_null($market)) $options['query'] = ['marketSymbol' => $market];
 
-        return $this->rest('GET', '/orders/open', $options, $needHeader);
+        return $this->rest('GET', '/orders/open', $options, (isset($needSequence) and $needSequence) ? false : null);
     }
 
     /**
-     * @param string|null $market
-     * @return array
-     * @throws GuzzleException|TransformResponseException
+     * @return int Current Sequence of Orders
+     * @throws GuzzleException
+     * @throws TransformResponseException
      */
-    public function headOpenOrders(?string $market = null): array
+    public function headOpenOrders(): int
     {
-        $options = [];
-        if (!is_null($market)) $options['query'] = ['marketSymbol' => $market];
-
-        return $this->rest('HEAD', '/orders/open', $options, true);
+        $responseArray = $this->rest('HEAD', '/orders/open', [], true);
+        return $responseArray['Sequence'];
     }
 }

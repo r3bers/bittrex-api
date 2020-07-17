@@ -15,9 +15,10 @@ class ResponseTransformerTest extends TestCase
     {
         $transformer = new ResponseTransformer();
         $data = ['foo' => 'bar'];
-        $response = new Response(200, ['Content-Type' => 'application/json'], json_encode($data));
+        $seq = ['Sequence' => 123];
+        $response = new Response(200, ['Content-Type' => 'application/json', 'Sequence' => ["123"]], json_encode($data));
 
-        $this->assertEquals($data, $transformer->transform($response));
+        $this->assertEquals(array_merge($data,$seq), $transformer->transform($response, true));
     }
 
     public function testTransformWithEmptyBody()
@@ -58,6 +59,6 @@ class ResponseTransformerTest extends TestCase
 
         $this->expectException(TransformResponseException::class);
 
-        $this->assertEquals($data, $transformer->transform($response, true));
+        $this->assertEquals($data, $transformer->transformHeader($response));
     }
 }

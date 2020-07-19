@@ -14,6 +14,9 @@ use R3bers\BittrexApi\Middleware\Authentication;
 
 class BittrexClient
 {
+    /**
+     * Main URL to Bittrex Exchange
+     */
     private const BASE_URI = 'https://api.bittrex.com';
 
     /** @var Client */
@@ -27,6 +30,33 @@ class BittrexClient
 
     /** @var string */
     private $secret = '';
+
+    /** @var string */
+    private $currentMinuteCount = 0;
+    /**
+     * @var int
+     */
+    private $lastAPITime;
+    /**
+     * @var int
+     */
+    private $prevMinuteCount = 0;
+
+    /**
+     * BittrexClient constructor.
+     */
+    public function __construct()
+    {
+        $this->lastAPITime = time();
+    }
+
+    /**
+     * @return int
+     */
+    public function getCurrentMinuteCount(): int
+    {
+        return $this->currentMinuteCount;
+    }
 
     /**
      * @param string $key
@@ -43,7 +73,24 @@ class BittrexClient
      */
     public function public(): PublicApi
     {
+        $this->countAPI();
         return new PublicApi($this->getPublicClient());
+
+    }
+
+    /**
+     * Counting in minute API
+     */
+    private function countAPI(): void
+    {
+        $currentTime = time();
+        if (intdiv($this->lastAPITime, 60) < intdiv($currentTime, 60)) {
+            $this->prevMinuteCount = $this->currentMinuteCount;
+            $this->currentMinuteCount = 1;
+        } else {
+            $this->currentMinuteCount++;
+            $this->lastAPITime = $currentTime;
+        }
     }
 
     /**
@@ -75,6 +122,7 @@ class BittrexClient
      */
     public function market(): Market
     {
+        $this->countAPI();
         return new Market($this->getPrivateClient());
     }
 
@@ -132,6 +180,15 @@ class BittrexClient
      */
     public function account(): Account
     {
+        $this->countAPI();
         return new Account($this->getPrivateClient());
+    }
+
+    /**
+     * @return int
+     */
+    public function getPrevMinuteCount(): int
+    {
+        return $this->prevMinuteCount;
     }
 }

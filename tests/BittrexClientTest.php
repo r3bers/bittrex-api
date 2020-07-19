@@ -73,4 +73,38 @@ class BittrexClientTest extends TestCase
 
         $client->account();
     }
+
+    public function testGetPrevMinuteCount()
+    {
+        $countPrev = 12; // Lets make 12 API requests in current minute
+
+        $client = new BittrexClient();
+        if (time() % 60 > 55) sleep(5); // Not enough seconds before next minute
+        $currentTime = time();
+
+        for ($i = 0; $i < $countPrev; $i++)
+            $client->public();
+
+        while (intdiv(time(), 60) == intdiv($currentTime, 60)) //Wait next minute
+            sleep(1);
+
+        $client->public(); // Make call in this minute to fix Prev Minute Count
+
+        $this->assertEquals($client->getPrevMinuteCount(), $countPrev);
+    }
+
+
+    public function testGetCurrentMinuteCount()
+    {
+        $countPrev = 11; // Lets make 11 API requests in current minute
+
+        $client = new BittrexClient();
+        if (time() % 60 > 55) sleep(5); // Not enough seconds before next minute
+
+        for ($i = 0; $i < $countPrev; $i++)
+            $client->public();
+
+        $this->assertEquals($client->getCurrentMinuteCount(), $countPrev);
+    }
+
 }

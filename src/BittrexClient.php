@@ -31,7 +31,7 @@ class BittrexClient
     /** @var string */
     private $secret = '';
 
-    /** @var string */
+    /** @var int */
     private $currentMinuteCount = 0;
     /**
      * @var int

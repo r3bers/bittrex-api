@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace R3bers\BittrexApi\Api;
 
 use Exception;
+use GuzzleHttp\Exception\GuzzleException;
 
 /**
  * Class Account
@@ -14,7 +15,7 @@ class Account extends Api
 {
     /**
      * @return array
-     * @throws Exception
+     * @throws Exception|GuzzleException
      */
     public function getBalances(): array
     {
@@ -24,7 +25,7 @@ class Account extends Api
     /**
      * @param string $currency
      * @return array
-     * @throws Exception
+     * @throws Exception|GuzzleException
      */
     public function getBalance(string $currency): array
     {
@@ -34,7 +35,7 @@ class Account extends Api
     /**
      * @param string $currency
      * @return array
-     * @throws Exception
+     * @throws Exception|GuzzleException
      */
     public function getDepositAddress(string $currency): array
     {
@@ -44,7 +45,7 @@ class Account extends Api
     /**
      * @param string $currency
      * @return array
-     * @throws Exception
+     * @throws Exception|GuzzleException
      */
     public function setDepositAddress(string $currency): array
     {
@@ -59,7 +60,7 @@ class Account extends Api
      * @param string $address
      * @param string|null $paymentId
      * @return array
-     * @throws Exception
+     * @throws Exception|GuzzleException
      */
     public function withdraw(string $currency, float $quantity, string $address, ?string $paymentId = null): array
     {
@@ -80,7 +81,7 @@ class Account extends Api
     /**
      * @param string $uuid
      * @return array
-     * @throws Exception
+     * @throws Exception|GuzzleException
      */
     public function getOrder(string $uuid): array
     {
@@ -90,7 +91,7 @@ class Account extends Api
     /**
      * @param string|null $marketSymbol
      * @return array
-     * @throws Exception
+     * @throws Exception|GuzzleException
      */
     public function getOrderHistory(?string $marketSymbol = null): array
     {
@@ -104,7 +105,7 @@ class Account extends Api
      * @param string|null $currencySymbol
      * @param string|null $status
      * @return array
-     * @throws Exception
+     * @throws Exception|GuzzleException
      */
     public function getWithdrawalHistory(?string $currencySymbol = null, ?string $status = null): array
     {
@@ -116,7 +117,7 @@ class Account extends Api
      * @param string $currencySymbol
      * @param string $status
      * @return array
-     * @throws Exception
+     * @throws Exception|GuzzleException
      */
     private function getHistory(string $whatHistory, ?string $currencySymbol, ?string $status): array
     {
@@ -132,7 +133,7 @@ class Account extends Api
      * @param string|null $currencySymbol
      * @param string|null $status
      * @return array
-     * @throws Exception
+     * @throws Exception|GuzzleException
      */
     public function getDepositHistory(?string $currencySymbol = null, ?string $status = null): array
     {

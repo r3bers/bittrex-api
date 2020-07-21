@@ -13,24 +13,24 @@ use R3bers\BittrexApi\Exception\InvalidCredentialException;
 
 class BittrexClientTest extends TestCase
 {
-    public function testIsEmptyInitialCredential()
-    {
-        $client = new BittrexClient();
-
-        $this->assertEmpty($client->getKey());
-        $this->assertEmpty($client->getSecret());
-    }
+    private const API_KEY = '6d7f896ea1b0ff47559473c91cdbe318';
+    private const API_SECRET = '6d7f896ea1b0ff47559473c91cdbe318';
 
     public function testSetCredential()
     {
-        $secret = 'API_SECRET';
-        $key = 'API_KEY';
-
         $client = new BittrexClient();
-        $client->setCredential($key, $secret);
 
-        $this->assertEquals($client->getKey(), $key);
-        $this->assertEquals($client->getSecret(), $secret);
+        $this->expectException(InvalidCredentialException::class);
+
+        $client->setCredential('Not MD5', 'Also not MD5');
+    }
+
+    public function testSetCredentialThrowInvalidCredentialException()
+    {
+        $client = new BittrexClient();
+        $client->setCredential(self::API_KEY, self::API_SECRET);
+
+        $this->assertEquals(true, $client->haveValidCredentials());
     }
 
     public function testPublic()
@@ -43,7 +43,7 @@ class BittrexClientTest extends TestCase
     public function testMarket()
     {
         $client = new BittrexClient();
-        $client->setCredential('API_KEY', 'API_SECRET');
+        $client->setCredential(self::API_KEY, self::API_SECRET);
 
         $this->assertInstanceOf(Market::class, $client->market());
     }
@@ -60,7 +60,7 @@ class BittrexClientTest extends TestCase
     public function testAccount()
     {
         $client = new BittrexClient();
-        $client->setCredential('API_KEY', 'API_SECRET');
+        $client->setCredential(self::API_KEY, self::API_SECRET);
 
         $this->assertInstanceOf(Account::class, $client->account());
     }
@@ -73,38 +73,4 @@ class BittrexClientTest extends TestCase
 
         $client->account();
     }
-
-    public function testGetPrevMinuteCount()
-    {
-        $countPrev = 12; // Lets make 12 API requests in current minute
-
-        $client = new BittrexClient();
-        if (time() % 60 > 55) sleep(5); // Not enough seconds before next minute
-        $currentTime = time();
-
-        for ($i = 0; $i < $countPrev; $i++)
-            $client->public();
-
-        while (intdiv(time(), 60) == intdiv($currentTime, 60)) //Wait next minute
-            sleep(1);
-
-        $client->public(); // Make call in this minute to fix Prev Minute Count
-
-        $this->assertEquals($client->getPrevMinuteCount(), $countPrev);
-    }
-
-
-    public function testGetCurrentMinuteCount()
-    {
-        $countPrev = 11; // Lets make 11 API requests in current minute
-
-        $client = new BittrexClient();
-        if (time() % 60 > 55) sleep(5); // Not enough seconds before next minute
-
-        for ($i = 0; $i < $countPrev; $i++)
-            $client->public();
-
-        $this->assertEquals($client->getCurrentMinuteCount(), $countPrev);
-    }
-
 }

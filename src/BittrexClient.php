@@ -19,6 +19,12 @@ class BittrexClient
      */
     private const BASE_URI = 'https://api.bittrex.com';
 
+    private const CLIENT_HEADER = [
+        'User-Agent' => 'r3bers/bittrex-api/1.3',
+        'Accept' => 'application/json',
+        'Content-Type' => 'application/json'
+    ];
+
     /** @var Client */
     private $publicClient;
 
@@ -31,66 +37,12 @@ class BittrexClient
     /** @var string */
     private $secret = '';
 
-    /** @var int */
-    private $currentMinuteCount = 0;
-    /**
-     * @var int
-     */
-    private $lastAPITime;
-    /**
-     * @var int
-     */
-    private $prevMinuteCount = 0;
-
-    /**
-     * BittrexClient constructor.
-     */
-    public function __construct()
-    {
-        $this->lastAPITime = time();
-    }
-
-    /**
-     * @return int
-     */
-    public function getCurrentMinuteCount(): int
-    {
-        return $this->currentMinuteCount;
-    }
-
-    /**
-     * @param string $key
-     * @param string $secret
-     */
-    public function setCredential(string $key, string $secret): void
-    {
-        $this->key = $key;
-        $this->secret = $secret;
-    }
-
     /**
      * @return PublicApi
      */
     public function public(): PublicApi
     {
-        $this->countAPI();
         return new PublicApi($this->getPublicClient());
-
-    }
-
-    /**
-     * Counting in minute API
-     */
-    private function countAPI(): void
-    {
-        $currentTime = time();
-        if (intdiv($this->lastAPITime, 60) < intdiv($currentTime, 60)) {
-            $this->prevMinuteCount = $this->currentMinuteCount;
-            $this->currentMinuteCount = 1;
-        } else {
-            $this->currentMinuteCount++;
-            $this->lastAPITime = $currentTime;
-        }
     }
 
     /**
@@ -107,13 +59,33 @@ class BittrexClient
     private function createPublicClient(): Client
     {
         return new Client([
-            'headers' => [
-                'User-Agent' => 'r3bers/bittrex-api/1.3',
-                'Accept' => 'application/json',
-                'Content-Type' => 'application/json'
-            ],
+            'headers' => self::CLIENT_HEADER,
             'base_uri' => self::BASE_URI
         ]);
+    }
+
+    /**
+     * @param string $key
+     * @param string $secret
+     * @throws InvalidCredentialException
+     */
+    public function setCredential(string $key, string $secret): void
+    {
+
+        if (!($this->isValidMd5($key) and $this->isValidMd5($secret)))
+            throw new InvalidCredentialException('API Key and Secret have bad format');
+
+        $this->key = $key;
+        $this->secret = $secret;
+    }
+
+    /**
+     * @param string $md5
+     * @return bool
+     */
+    private function isValidMd5($md5 = '')
+    {
+        return (preg_match('/^[a-f0-9]{32}$/', $md5) === 1);
     }
 
     /**
@@ -122,7 +94,6 @@ class BittrexClient
      */
     public function market(): Market
     {
-        $this->countAPI();
         return new Market($this->getPrivateClient());
     }
 
@@ -141,37 +112,25 @@ class BittrexClient
      */
     private function createPrivateClient(): Client
     {
-        if (empty($this->key) || empty($this->secret)) {
-            throw new InvalidCredentialException('Key and secret must be set for authenticated API');
-        }
+        if (!$this->haveValidCredentials())
+            throw new InvalidCredentialException('Key and secret must be set before call Private API');
+
         $stack = HandlerStack::create();
-        $stack->push(new Authentication($this->getKey(), $this->getSecret()));
+        $stack->push(new Authentication($this->key, $this->secret));
 
         return new Client([
-            'headers' => [
-                'User-Agent' => 'r3bers/bittrex-api/1.3',
-                'Accept' => 'application/json',
-                'Content-Type' => 'application/json'
-            ],
+            'headers' => self::CLIENT_HEADER,
             'handler' => $stack,
             'base_uri' => self::BASE_URI
         ]);
     }
 
     /**
-     * @return string
+     * @return bool
      */
-    public function getKey(): string
+    public function haveValidCredentials(): bool
     {
-        return $this->key;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSecret(): string
-    {
-        return $this->secret;
+        return (!empty($this->key) and !empty($this->secret) and $this->isValidMd5($this->key) and $this->isValidMd5($this->secret));
     }
 
     /**
@@ -180,15 +139,6 @@ class BittrexClient
      */
     public function account(): Account
     {
-        $this->countAPI();
         return new Account($this->getPrivateClient());
-    }
-
-    /**
-     * @return int
-     */
-    public function getPrevMinuteCount(): int
-    {
-        return $this->prevMinuteCount;
     }
 }

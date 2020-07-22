@@ -20,7 +20,7 @@ class BittrexClient
     private const BASE_URI = 'https://api.bittrex.com';
 
     private const CLIENT_HEADER = [
-        'User-Agent' => 'r3bers/bittrex-api/1.3',
+        'User-Agent' => 'r3bers/bittrex-api/1.3.1',
         'Accept' => 'application/json',
         'Content-Type' => 'application/json'
     ];

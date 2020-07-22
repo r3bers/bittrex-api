@@ -21,7 +21,7 @@ class Market extends Api
      * @return array
      * @throws GuzzleException|TransformResponseException
      */
-    public function buyLimit(string $market, float $quantity, float $rate, $useAwards = true): array
+    public function buyLimit(string $market, float $quantity, float $rate, $useAwards = false): array
     {
         $newOrder = [
             'marketSymbol' => $market,
@@ -46,7 +46,7 @@ class Market extends Api
      * @return array
      * @throws GuzzleException|TransformResponseException
      */
-    public function sellLimit(string $market, float $quantity, float $rate, $useAwards = true): array
+    public function sellLimit(string $market, float $quantity, float $rate, $useAwards = false): array
     {
         $newOrder = [
             'marketSymbol' => $market,

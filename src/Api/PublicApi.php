@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace R3bers\BittrexApi\Api;
 
 use Exception;
+use GuzzleHttp\Exception\GuzzleException;
 
 /**
  * Class PublicApi
@@ -14,7 +15,7 @@ class PublicApi extends Api
 {
     /**
      * @return array
-     * @throws Exception
+     * @throws Exception|GuzzleException
      */
     public function getMarkets(): array
     {
@@ -23,7 +24,7 @@ class PublicApi extends Api
 
     /**
      * @return array
-     * @throws Exception
+     * @throws Exception|GuzzleException
      */
     public function getCurrencies(): array
     {
@@ -32,7 +33,7 @@ class PublicApi extends Api
 
     /**
      * @return array
-     * @throws Exception
+     * @throws Exception|GuzzleException
      */
     public function getTickers(): array
     {
@@ -42,7 +43,7 @@ class PublicApi extends Api
     /**
      * @param string $market
      * @return array
-     * @throws Exception
+     * @throws Exception|GuzzleException
      */
     public function getTicker(string $market): array
     {
@@ -51,7 +52,7 @@ class PublicApi extends Api
 
     /**
      * @return array
-     * @throws Exception
+     * @throws Exception|GuzzleException
      */
     public function getMarketSummaries(): array
     {
@@ -61,7 +62,7 @@ class PublicApi extends Api
     /**
      * @param string $market
      * @return array
-     * @throws Exception
+     * @throws Exception|GuzzleException
      */
     public function getMarketSummary(string $market): array
     {
@@ -72,7 +73,7 @@ class PublicApi extends Api
      * @param string $market
      * @param int $depth
      * @return array
-     * @throws Exception
+     * @throws Exception|GuzzleException
      */
     public function getOrderBook(string $market, $depth = 25): array
     {
@@ -84,7 +85,7 @@ class PublicApi extends Api
     /**
      * @param string $market
      * @return array
-     * @throws Exception
+     * @throws Exception|GuzzleException
      */
     public function getMarketHistory(string $market)
     {
@@ -93,7 +94,7 @@ class PublicApi extends Api
 
     /**
      * @return array
-     * @throws Exception
+     * @throws Exception|GuzzleException
      */
     public function ping(): array
     {

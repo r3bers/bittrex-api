@@ -6,6 +6,7 @@ namespace R3bers\BittrexApi\Api;
 
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
+use R3bers\BittrexApi\Exception\TransformResponseException;
 
 /**
  * Class Account
@@ -14,22 +15,37 @@ use GuzzleHttp\Exception\GuzzleException;
 class Account extends Api
 {
     /**
+     * @param bool|null $needSequence
      * @return array
-     * @throws Exception|GuzzleException
+     * @throws GuzzleException
+     * @throws TransformResponseException
      */
-    public function getBalances(): array
+    public function getBalances(?bool $needSequence = null): array
     {
-        return $this->rest('GET', '/balances');
+        return $this->rest('GET', '/balances', [], $needSequence);
+    }
+
+    /**
+     * @return int
+     * @throws GuzzleException
+     * @throws TransformResponseException
+     */
+    public function headBalances(): int
+    {
+        $responseArray = $this->rest('HEAD', '/balances');
+        return $responseArray['Sequence'];
     }
 
     /**
      * @param string $currency
+     * @param bool|null $needSequence
      * @return array
-     * @throws Exception|GuzzleException
+     * @throws GuzzleException
+     * @throws TransformResponseException
      */
-    public function getBalance(string $currency): array
+    public function getBalance(string $currency, ?bool $needSequence = null): array
     {
-        return $this->rest('GET', '/balances/' . $currency);
+        return $this->rest('GET', '/balances/' . $currency, [], $needSequence);
     }
 
     /**

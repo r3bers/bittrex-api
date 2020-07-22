@@ -29,6 +29,28 @@ class AccountTest extends ApiTestCase
         $this->assertNotEmpty($request->getHeaderLine('Api-Signature'));
     }
 
+    public function testHeadBalances()
+    {
+        $this->createApi()->headBalances();
+        $request = $this->getLastRequest();
+        $this->assertEquals('HEAD', $request->getMethod());
+        $this->assertEquals(
+            '/v3/balances',
+            $request->getUri()->__toString()
+        );
+        $this->assertEquals(
+            'API_KEY',
+            $request->getHeaderLine('Api-Key')
+        );
+        $this->assertEquals(
+            hash('sha512', ''),
+            $request->getHeaderLine('Api-Content-Hash')
+        );
+        $this->assertNotEmpty($request->getHeaderLine('Api-Timestamp'));
+        $this->assertNotEmpty($request->getHeaderLine('Api-Signature'));
+    }
+
+
     private function createApi(): Account
     {
         return new Account($this->getMockClient(true));

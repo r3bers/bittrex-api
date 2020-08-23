@@ -106,13 +106,24 @@ class Account extends Api
 
     /**
      * @param string|null $marketSymbol
+     * @param int|null $pageSize
+     * @param string|null $startDate
+     * @param string|null $endDate
+     * @param string|null $nextPageToken
+     * @param string|null $previousPageToken
      * @return array
-     * @throws Exception|GuzzleException
+     * @throws GuzzleException
+     * @throws TransformResponseException
      */
-    public function getOrderHistory(?string $marketSymbol = null): array
+    public function getOrderHistory(?string $marketSymbol = null, ?int $pageSize = null, ?string $startDate = null, ?string $endDate = null, ?string $nextPageToken = null, ?string $previousPageToken = null): array
     {
         $options = [];
         if (!is_null($marketSymbol)) $options['query'] = ['marketSymbol' => $marketSymbol];
+        if (!is_null($pageSize)) $options['query'] = ['pageSize' => $pageSize];
+        if (!is_null($startDate)) $options['query'] = ['startDate' => $startDate];
+        if (!is_null($endDate)) $options['query'] = ['endDate' => $endDate];
+        if (!is_null($nextPageToken)) $options['query'] = ['nextPageToken' => $nextPageToken];
+        if (!is_null($previousPageToken)) $options['query'] = ['previousPageToken' => $previousPageToken];
 
         return $this->rest('GET', '/orders/closed', $options);
     }

@@ -117,7 +117,7 @@ class Account extends Api
         if (!is_null($marketSymbol)) $options['query'] = ['marketSymbol' => $marketSymbol];
         if (is_array($pagination))
             foreach ($pagination as $key => $value)
-                $options['query'] = [$key => $value];
+                $options['query'][$key] = $value;
 
         return $this->rest('GET', '/orders/closed', $options);
     }

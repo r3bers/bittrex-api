@@ -163,11 +163,11 @@ class AccountTest extends ApiTestCase
 
     public function testGetOrderHistory()
     {
-        $this->createApi()->getOrderHistory('BTC-LTC');
+        $this->createApi()->getOrderHistory('BTC-LTC', ['pageSize' => 10]);
 
         $request = $this->getLastRequest();
         $this->assertEquals(
-            '/v3/orders/closed?marketSymbol=BTC-LTC',
+            '/v3/orders/closed?marketSymbol=BTC-LTC&pageSize=10',
             $request->getUri()->__toString()
         );
         $this->assertEquals(

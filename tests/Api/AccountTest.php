@@ -8,6 +8,28 @@ use R3bers\BittrexApi\Api\Account;
 
 class AccountTest extends ApiTestCase
 {
+    public function testGetVolume()
+    {
+        $this->createApi()->getVolume();
+        $request = $this->getLastRequest();
+
+        $this->assertEquals(
+            '/v3/account/volume',
+            $request->getUri()->__toString()
+        );
+        $this->assertEquals(
+            'API_KEY',
+            $request->getHeaderLine('Api-Key')
+        );
+        $this->assertEquals(
+            hash('sha512', ''),
+            $request->getHeaderLine('Api-Content-Hash')
+        );
+        $this->assertNotEmpty($request->getHeaderLine('Api-Timestamp'));
+        $this->assertNotEmpty($request->getHeaderLine('Api-Signature'));
+    }
+
+
     public function testGetBalances()
     {
         $this->createApi()->getBalances();

@@ -15,6 +15,16 @@ use R3bers\BittrexApi\Exception\TransformResponseException;
 class Account extends Api
 {
     /**
+     * @return array
+     * @throws GuzzleException
+     * @throws TransformResponseException
+     */
+    public function getVolume(): array
+    {
+        return $this->rest('GET', '/account/volume');
+    }
+
+    /**
      * @param bool|null $needSequence
      * @return array
      * @throws GuzzleException

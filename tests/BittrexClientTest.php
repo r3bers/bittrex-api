@@ -25,6 +25,9 @@ class BittrexClientTest extends TestCase
         $client->setCredential('Not MD5', 'Also not MD5');
     }
 
+    /**
+     * @throws \R3bers\BittrexApi\Exception\InvalidCredentialException
+     */
     public function testSetCredentialThrowInvalidCredentialException()
     {
         $client = new BittrexClient();
@@ -40,6 +43,9 @@ class BittrexClientTest extends TestCase
         $this->assertInstanceOf(PublicApi::class, $client->public());
     }
 
+    /**
+     * @throws \R3bers\BittrexApi\Exception\InvalidCredentialException
+     */
     public function testMarket()
     {
         $client = new BittrexClient();
@@ -57,6 +63,9 @@ class BittrexClientTest extends TestCase
         $client->market();
     }
 
+    /**
+     * @throws \R3bers\BittrexApi\Exception\InvalidCredentialException
+     */
     public function testAccount()
     {
         $client = new BittrexClient();

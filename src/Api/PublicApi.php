@@ -75,7 +75,7 @@ class PublicApi extends Api
      * @return array
      * @throws Exception|GuzzleException
      */
-    public function getOrderBook(string $market, $depth = 25): array
+    public function getOrderBook(string $market, int $depth = 25): array
     {
         $options = ['query' => ['depth' => $depth]];
 
@@ -87,7 +87,7 @@ class PublicApi extends Api
      * @return array
      * @throws Exception|GuzzleException
      */
-    public function getMarketHistory(string $market)
+    public function getMarketHistory(string $market): array
     {
         return $this->rest('GET', '/markets/' . $market . '/trades');
     }

@@ -22,7 +22,7 @@ class Authentication
      * Authentication constructor.
      * @param string $key
      * @param string $secret
-     * @param string $subaccountId
+     * @param string|null $subaccountId
      */
     public function __construct(string $key, string $secret, ?string $subaccountId = null)
     {
@@ -35,7 +35,7 @@ class Authentication
      * @param callable $next
      * @return Closure
      */
-    public function __invoke(callable $next)
+    public function __invoke(callable $next): Closure
     {
         return function (RequestInterface $request, array $options = []) use ($next) {
             $timestamp = round(microtime(true) * 1000);

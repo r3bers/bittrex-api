@@ -83,7 +83,7 @@ class BittrexClient
      * @param string $md5
      * @return bool
      */
-    private function isValidMd5($md5 = '')
+    public function isValidMd5(string $md5 = ''): bool
     {
         return (preg_match('/^[a-f0-9]{32}$/', $md5) === 1);
     }

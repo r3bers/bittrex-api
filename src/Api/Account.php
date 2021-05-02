@@ -145,10 +145,10 @@ class Account extends Api
 
     /**
      * @param string $whatHistory
-     * @param string $currencySymbol
-     * @param string $status
+     * @param string|null $currencySymbol
+     * @param string|null $status
      * @return array
-     * @throws Exception|GuzzleException
+     * @throws GuzzleException | TransformResponseException
      */
     private function getHistory(string $whatHistory, ?string $currencySymbol, ?string $status): array
     {

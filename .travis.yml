@@ -23,12 +23,13 @@ before_script:
 
 script:
   - composer validate --strict
-  - vendor/bin/phpunit
+  - vendor/bin/phpunit --coverage-clover coverage.xml
 
 after_script:
   - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
   - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover ./build/logs/clover.xml
+  - bash <(curl -s https://codecov.io/bash)
 
 notifications:
   email:

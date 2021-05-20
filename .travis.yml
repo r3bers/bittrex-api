@@ -28,10 +28,10 @@ script:
   - vendor/bin/phpunit --coverage-clover coverage.xml
 
 after_script:
+  - bash <(curl -s https://codecov.io/bash)
   - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
   - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover ./build/logs/clover.xml
-  - bash <(curl -s https://codecov.io/bash)
 
 notifications:
   email:

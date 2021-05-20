@@ -7,6 +7,7 @@ namespace R3bers\BittrexApi;
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use R3bers\BittrexApi\Api\Account;
+use R3bers\BittrexApi\Api\Batch;
 use R3bers\BittrexApi\Api\Market;
 use R3bers\BittrexApi\Api\PublicApi;
 use R3bers\BittrexApi\Exception\InvalidCredentialException;
@@ -58,10 +59,12 @@ class BittrexClient
      */
     private function createPublicClient(): Client
     {
-        return new Client([
+        $this->publicClient = new Client([
             'headers' => self::CLIENT_HEADER,
             'base_uri' => self::BASE_URI
         ]);
+
+        return $this->publicClient;
     }
 
     /**
@@ -89,12 +92,12 @@ class BittrexClient
     }
 
     /**
-     * @return Market
+     * @return Batch
      * @throws InvalidCredentialException
      */
-    public function market(): Market
+    public function batch(): Batch
     {
-        return new Market($this->getPrivateClient());
+        return new Batch($this->getPrivateClient());
     }
 
     /**
@@ -118,11 +121,13 @@ class BittrexClient
         $stack = HandlerStack::create();
         $stack->push(new Authentication($this->key, $this->secret));
 
-        return new Client([
+        $this->privateClient = new Client([
             'headers' => self::CLIENT_HEADER,
             'handler' => $stack,
             'base_uri' => self::BASE_URI
         ]);
+
+        return $this->privateClient;
     }
 
     /**
@@ -131,6 +136,15 @@ class BittrexClient
     public function haveValidCredentials(): bool
     {
         return (!empty($this->key) and !empty($this->secret) and $this->isValidMd5($this->key) and $this->isValidMd5($this->secret));
+    }
+
+    /**
+     * @return Market
+     * @throws InvalidCredentialException
+     */
+    public function market(): Market
+    {
+        return new Market($this->getPrivateClient());
     }
 
     /**

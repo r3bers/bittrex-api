@@ -14,7 +14,7 @@ use R3bers\BittrexApi\Exception\TransformResponseException;
  */
 class Account extends Api
 {
-    /**
+    /** https://bittrex.github.io/api/v3#operation--account-volume-get
      * @return array
      * @throws GuzzleException
      * @throws TransformResponseException
@@ -24,7 +24,7 @@ class Account extends Api
         return $this->rest('GET', '/account/volume');
     }
 
-    /**
+    /** https://bittrex.github.io/api/v3#operation--balances-get
      * @param bool|null $needSequence
      * @return array
      * @throws GuzzleException
@@ -35,7 +35,7 @@ class Account extends Api
         return $this->rest('GET', '/balances', [], $needSequence);
     }
 
-    /**
+    /** https://bittrex.github.io/api/v3#operation--balances-head
      * @return int
      * @throws GuzzleException
      * @throws TransformResponseException
@@ -46,7 +46,7 @@ class Account extends Api
         return $responseArray['Sequence'];
     }
 
-    /**
+    /** https://bittrex.github.io/api/v3#operation--balances--currencySymbol--get
      * @param string $currency
      * @param bool|null $needSequence
      * @return array
@@ -58,7 +58,7 @@ class Account extends Api
         return $this->rest('GET', '/balances/' . $currency, [], $needSequence);
     }
 
-    /**
+    /** https://bittrex.github.io/api/v3#operation--addresses-get
      * @param string $currency
      * @return array
      * @throws Exception|GuzzleException
@@ -68,7 +68,7 @@ class Account extends Api
         return $this->rest('GET', '/addresses/' . $currency);
     }
 
-    /**
+    /** https://bittrex.github.io/api/v3#operation--addresses-post
      * @param string $currency
      * @return array
      * @throws Exception|GuzzleException
@@ -80,7 +80,7 @@ class Account extends Api
         return $this->rest('POST', '/addresses', $options);
     }
 
-    /**
+    /** https://bittrex.github.io/api/v3#operation--withdrawals-post
      * @param string $currency
      * @param float $quantity
      * @param string $address
@@ -104,7 +104,7 @@ class Account extends Api
         return $this->rest('POST', '/withdrawals', $options);
     }
 
-    /**
+    /** https://bittrex.github.io/api/v3#operation--orders--orderId--get
      * @param string $uuid
      * @return array
      * @throws Exception|GuzzleException
@@ -114,7 +114,7 @@ class Account extends Api
         return $this->rest('GET', '/orders/' . $uuid);
     }
 
-    /**
+    /** https://bittrex.github.io/api/v3#operation--orders-closed-get
      * @param string|null $marketSymbol
      * @param array|null $pagination
      * @return array
@@ -132,7 +132,7 @@ class Account extends Api
         return $this->rest('GET', '/orders/closed', $options);
     }
 
-    /**
+    /** https://bittrex.github.io/api/v3#operation--withdrawals-closed-get
      * @param string|null $currencySymbol
      * @param string|null $status
      * @return array
@@ -160,7 +160,7 @@ class Account extends Api
         return $this->rest('GET', '/' . $whatHistory . '/closed', $options);
     }
 
-    /**
+    /** https://bittrex.github.io/api/v3#operation--deposits-closed-get
      * @param string|null $currencySymbol
      * @param string|null $status
      * @return array

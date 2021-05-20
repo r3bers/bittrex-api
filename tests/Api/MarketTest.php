@@ -5,9 +5,14 @@ declare(strict_types=1);
 namespace R3bers\BittrexApi\Tests\Api;
 
 use R3bers\BittrexApi\Api\Market;
+use R3bers\BittrexApi\Exception\TransformResponseException;
+use GuzzleHttp\Exception\GuzzleException;
 
 class MarketTest extends ApiTestCase
 {
+    /**
+     * @throws TransformResponseException | GuzzleException
+     */
     public function testBuyLimit()
     {
         $this->createApi()->buyLimit('USDT-BTC', 1, 1);
@@ -34,6 +39,9 @@ class MarketTest extends ApiTestCase
         return new Market($this->getMockClient(true));
     }
 
+    /**
+     * @throws TransformResponseException | GuzzleException
+     */
     public function testSellLimit()
     {
         $this->createApi()->sellLimit('BTC-LTC', 1.2, 1.3);
@@ -55,6 +63,9 @@ class MarketTest extends ApiTestCase
         $this->assertNotEmpty($request->getHeaderLine('Api-Signature'));
     }
 
+    /**
+     * @throws TransformResponseException | GuzzleException
+     */
     public function testCancel()
     {
         $this->createApi()->cancel('251c48e7-95d4-d53f-ad76-a7c6547b74ca9');
@@ -76,6 +87,9 @@ class MarketTest extends ApiTestCase
         $this->assertNotEmpty($request->getHeaderLine('Api-Signature'));
     }
 
+    /**
+     * @throws TransformResponseException | GuzzleException
+     */
     public function testGetOpenOrders()
     {
         $this->createApi()->getOpenOrders();
@@ -98,6 +112,9 @@ class MarketTest extends ApiTestCase
         $this->assertNotEmpty($request->getHeaderLine('Api-Signature'));
     }
 
+    /**
+     * @throws TransformResponseException | GuzzleException
+     */
     public function testGetOpenOrdersWithMarket()
     {
         $this->createApi()->getOpenOrders('BTC-LTC');
@@ -120,6 +137,9 @@ class MarketTest extends ApiTestCase
         $this->assertNotEmpty($request->getHeaderLine('Api-Signature'));
     }
 
+    /**
+     * @throws TransformResponseException | GuzzleException
+     */
     public function testHeadOpenOrders()
     {
         $this->createApi()->headOpenOrders();

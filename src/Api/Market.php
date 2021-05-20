@@ -13,7 +13,7 @@ use R3bers\BittrexApi\Exception\TransformResponseException;
  */
 class Market extends Api
 {
-    /**
+    /** https://bittrex.github.io/api/v3#operation--orders-post
      * @param string $market
      * @param float $quantity
      * @param float $rate
@@ -38,7 +38,7 @@ class Market extends Api
         return $this->rest('POST', '/orders', $options);
     }
 
-    /**
+    /** https://bittrex.github.io/api/v3#operation--orders-post
      * @param string $market
      * @param float $quantity
      * @param float $rate
@@ -63,7 +63,7 @@ class Market extends Api
         return $this->rest('POST', '/orders', $options);
     }
 
-    /**
+    /** https://bittrex.github.io/api/v3#operation--orders--orderId--delete
      * @param string $uuid
      * @return array
      * @throws GuzzleException|TransformResponseException
@@ -73,7 +73,7 @@ class Market extends Api
         return $this->rest('DELETE', '/orders/' . $uuid);
     }
 
-    /**
+    /** https://bittrex.github.io/api/v3#operation--orders-open-get
      * @param string|null $market
      * @param bool|null $needSequence if true additional member of array named Sequence added to return
      * @return array
@@ -87,7 +87,7 @@ class Market extends Api
         return $this->rest('GET', '/orders/open', $options, ($needSequence));
     }
 
-    /**
+    /** https://bittrex.github.io/api/v3#operation--orders-open-head
      * @return int Current Sequence of Orders
      * @throws GuzzleException
      * @throws TransformResponseException

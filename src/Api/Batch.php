@@ -18,7 +18,7 @@ class Batch extends Api
     /**
      * @var Queue
      */
-    protected $batchQueue;
+    protected Queue $batchQueue;
 
     /**
      * Api constructor.

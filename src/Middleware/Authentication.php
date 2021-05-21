@@ -10,13 +10,13 @@ use Psr\Http\Message\RequestInterface;
 class Authentication
 {
     /** @var string */
-    private $key;
+    private string $key;
 
     /** @var string */
-    private $secret;
+    private string $secret;
 
-    /** @var string */
-    private $subaccountId;
+    /** @var ?string */
+    private ?string $subaccountId;
 
     /**
      * Authentication constructor.

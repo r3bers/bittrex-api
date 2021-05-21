@@ -27,20 +27,20 @@ class BittrexClient
     ];
 
     /** @var Client */
-    private $publicClient;
+    private Client $publicClient;
 
     /** @var Client */
-    private $privateClient;
+    private Client $privateClient;
 
     /** @var string */
-    private $key = '';
+    private string $key = '';
 
     /** @var string */
-    private $secret = '';
+    private string $secret = '';
     /**
      * @var Batch
      */
-    private $batchClient;
+    private Batch $batchClient;
 
     /**
      * @return PublicApi
@@ -55,7 +55,7 @@ class BittrexClient
      */
     private function getPublicClient(): Client
     {
-        return $this->publicClient ?: $this->createPublicClient();
+        return $this->publicClient ?? $this->createPublicClient();
     }
 
     /**
@@ -102,7 +102,7 @@ class BittrexClient
     public function batch(): Batch
     {
 
-        return $this->batchClient ?: $this->createBatch();
+        return $this->batchClient ?? $this->createBatch();
     }
 
     /**
@@ -120,7 +120,7 @@ class BittrexClient
      */
     private function getPrivateClient(): Client
     {
-        return $this->privateClient ?: $this->createPrivateClient();
+        return $this->privateClient ?? $this->createPrivateClient();
     }
 
     /**

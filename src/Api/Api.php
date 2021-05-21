@@ -15,13 +15,22 @@ use R3bers\BittrexApi\Message\ResponseTransformer;
  */
 class Api
 {
-    /** @var Client */
-    protected $client;
-    /** @var ResponseTransformer */
-    protected $transformer;
-    /** @var string */
-    private $version = 'v3';
-    private $endpoint = '/';
+    /**
+     * @var Client
+     */
+    protected Client $client;
+    /**
+     * @var ResponseTransformer
+     */
+    protected ResponseTransformer $transformer;
+    /**
+     * @var string
+     */
+    private string $version = 'v3';
+    /**
+     * @var string
+     */
+    private string $endpoint = '/';
 
     /**
      * Api constructor.

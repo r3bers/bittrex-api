@@ -37,6 +37,10 @@ class BittrexClient
 
     /** @var string */
     private $secret = '';
+    /**
+     * @var Batch
+     */
+    private $batchClient;
 
     /**
      * @return PublicApi
@@ -97,7 +101,17 @@ class BittrexClient
      */
     public function batch(): Batch
     {
-        return new Batch($this->getPrivateClient());
+
+        return $this->batchClient ?: $this->createBatch();
+    }
+
+    /**
+     * @throws InvalidCredentialException
+     */
+    private function createBatch(): Batch
+    {
+        $this->batchClient = new Batch($this->getPrivateClient());
+        return $this->batchClient;
     }
 
     /**

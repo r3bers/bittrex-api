@@ -24,7 +24,7 @@ before_script:
 
 script:
   - composer validate --strict
-  - vendor/bin/phpunit --coverage-clover coverage.xml
+  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
 
 after_script:
   - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi

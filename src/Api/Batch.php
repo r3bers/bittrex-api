@@ -49,7 +49,6 @@ class Batch extends Api
                 'limit' => $rate,
                 'timeInForce' => 'GOOD_TIL_CANCELLED',
                 'useAwards' => $useAwards
-
             ]];
         $this->batchQueue->push($addOrder);
     }
@@ -74,7 +73,6 @@ class Batch extends Api
                 'limit' => $rate,
                 'timeInForce' => 'GOOD_TIL_CANCELLED',
                 'useAwards' => $useAwards
-
             ]];
         $this->batchQueue->push($addOrder);
     }

@@ -13,6 +13,7 @@ use R3bers\BittrexApi\Exception\TransformResponseException;
  */
 class Market extends Api
 {
+
     /** https://bittrex.github.io/api/v3#operation--orders-post
      * @param string $market
      * @param float $quantity
@@ -23,19 +24,31 @@ class Market extends Api
      */
     public function buyLimit(string $market, float $quantity, float $rate, bool $useAwards = false): array
     {
+        $options = $this->limitOrder('BUY', $market, $quantity, $rate, $useAwards);
+        return $this->rest('POST', '/orders', $options);
+    }
+
+    /** Helper function for order to prevent duplication
+     * @param string $direction
+     * @param string $marketSymbol
+     * @param float $quantity
+     * @param float $limit
+     * @param bool $useAwards
+     * @return array
+     */
+    private function limitOrder(string $direction, string $marketSymbol, float $quantity, float $limit, bool $useAwards): array
+    {
         $newOrder = [
-            'marketSymbol' => $market,
+            'marketSymbol' => $marketSymbol,
             'direction' => 'BUY',
-            'type' => 'LIMIT',
+            'type' => $direction,
             'quantity' => $quantity,
-            'limit' => $rate,
+            'limit' => $limit,
             'timeInForce' => 'GOOD_TIL_CANCELLED',
             'useAwards' => $useAwards
 
         ];
-        $options = ['body' => json_encode($newOrder)];
-
-        return $this->rest('POST', '/orders', $options);
+        return ['body' => json_encode($newOrder)];
     }
 
     /** https://bittrex.github.io/api/v3#operation--orders-post
@@ -48,18 +61,7 @@ class Market extends Api
      */
     public function sellLimit(string $market, float $quantity, float $rate, bool $useAwards = false): array
     {
-        $newOrder = [
-            'marketSymbol' => $market,
-            'direction' => 'SELL',
-            'type' => 'LIMIT',
-            'quantity' => $quantity,
-            'limit' => $rate,
-            'timeInForce' => 'GOOD_TIL_CANCELLED',
-            'useAwards' => $useAwards
-
-        ];
-        $options = ['body' => json_encode($newOrder)];
-
+        $options = $this->limitOrder('SELL', $market, $quantity, $rate, $useAwards);
         return $this->rest('POST', '/orders', $options);
     }
 

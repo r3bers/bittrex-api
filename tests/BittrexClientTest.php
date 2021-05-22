@@ -6,6 +6,7 @@ namespace R3bers\BittrexApi\Tests;
 
 use PHPUnit\Framework\TestCase;
 use R3bers\BittrexApi\Api\Account;
+use R3bers\BittrexApi\Api\Batch;
 use R3bers\BittrexApi\Api\Market;
 use R3bers\BittrexApi\Api\PublicApi;
 use R3bers\BittrexApi\BittrexClient;
@@ -16,6 +17,9 @@ class BittrexClientTest extends TestCase
     private const API_KEY = '6d7f896ea1b0ff47559473c91cdbe318';
     private const API_SECRET = '6d7f896ea1b0ff47559473c91cdbe318';
 
+    /**
+     * @throws InvalidCredentialException
+     */
     public function testSetCredential()
     {
         $client = new BittrexClient();
@@ -26,7 +30,7 @@ class BittrexClientTest extends TestCase
     }
 
     /**
-     * @throws \R3bers\BittrexApi\Exception\InvalidCredentialException
+     * @throws InvalidCredentialException
      */
     public function testSetCredentialThrowInvalidCredentialException()
     {
@@ -44,7 +48,7 @@ class BittrexClientTest extends TestCase
     }
 
     /**
-     * @throws \R3bers\BittrexApi\Exception\InvalidCredentialException
+     * @throws InvalidCredentialException
      */
     public function testMarket()
     {
@@ -54,6 +58,9 @@ class BittrexClientTest extends TestCase
         $this->assertInstanceOf(Market::class, $client->market());
     }
 
+    /**
+     * @throws InvalidCredentialException
+     */
     public function testMarketThrowInvalidCredentialException()
     {
         $client = new BittrexClient();
@@ -64,7 +71,7 @@ class BittrexClientTest extends TestCase
     }
 
     /**
-     * @throws \R3bers\BittrexApi\Exception\InvalidCredentialException
+     * @throws InvalidCredentialException
      */
     public function testAccount()
     {
@@ -74,6 +81,9 @@ class BittrexClientTest extends TestCase
         $this->assertInstanceOf(Account::class, $client->account());
     }
 
+    /**
+     * @throws InvalidCredentialException
+     */
     public function testAccountThrowInvalidCredentialException()
     {
         $client = new BittrexClient();
@@ -82,4 +92,28 @@ class BittrexClientTest extends TestCase
 
         $client->account();
     }
+
+    /**
+     * @throws InvalidCredentialException
+     */
+    public function testBatch()
+    {
+        $client = new BittrexClient();
+        $client->setCredential(self::API_KEY, self::API_SECRET);
+
+        $this->assertInstanceOf(Batch::class, $client->batch());
+    }
+
+    /**
+     * @throws InvalidCredentialException
+     */
+    public function testBatchThrowInvalidCredentialException()
+    {
+        $client = new BittrexClient();
+
+        $this->expectException(InvalidCredentialException::class);
+
+        $client->batch();
+    }
+
 }

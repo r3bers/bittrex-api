@@ -13,55 +13,76 @@ use R3bers\BittrexApi\Exception\TransformResponseException;
  */
 class Market extends Api
 {
+    /**
+     * @var string
+     */
+    private $marketSymbol;
+    /**
+     * @var float
+     */
+    private $quantity;
+    /**
+     * @var float
+     */
+    private $limit;
+    /**
+     * @var bool
+     */
+    private $useAwards;
 
     /** https://bittrex.github.io/api/v3#operation--orders-post
-     * @param string $market
-     * @param float $quantity
-     * @param float $rate
-     * @param bool $useAwards
-     * @return array
-     * @throws GuzzleException|TransformResponseException
-     */
-    public function buyLimit(string $market, float $quantity, float $rate, bool $useAwards = false): array
-    {
-        $options = $this->limitOrder('BUY', $market, $quantity, $rate, $useAwards);
-        return $this->rest('POST', '/orders', $options);
-    }
-
-    /** Helper function for order to prevent duplication
-     * @param string $direction
      * @param string $marketSymbol
      * @param float $quantity
      * @param float $limit
      * @param bool $useAwards
      * @return array
+     * @throws GuzzleException|TransformResponseException
      */
-    private function limitOrder(string $direction, string $marketSymbol, float $quantity, float $limit, bool $useAwards): array
+    public function buyLimit(string $marketSymbol, float $quantity, float $limit, bool $useAwards = false): array
+    {
+        $this->marketSymbol = $marketSymbol;
+        $this->quantity = $quantity;
+        $this->limit = $limit;
+        $this->useAwards = $useAwards;
+        $options = $this->limitOrder('BUY');
+        return $this->rest('POST', '/orders', $options);
+    }
+
+    /** Helper function for order to prevent duplication
+     * @param string $direction
+     * @return array
+     */
+    private function limitOrder(string $direction): array
     {
         $newOrder = [
-            'marketSymbol' => $marketSymbol,
+            'marketSymbol' => $this->marketSymbol,
             'direction' => 'BUY',
             'type' => $direction,
-            'quantity' => $quantity,
-            'limit' => $limit,
+            'quantity' => $this->quantity,
+            'limit' => $this->limit,
             'timeInForce' => 'GOOD_TIL_CANCELLED',
-            'useAwards' => $useAwards
+            'useAwards' => $this->useAwards
 
         ];
         return ['body' => json_encode($newOrder)];
     }
 
     /** https://bittrex.github.io/api/v3#operation--orders-post
-     * @param string $market
+     * @param string $marketSymbol
      * @param float $quantity
-     * @param float $rate
+     * @param float $limit
      * @param bool $useAwards
      * @return array
-     * @throws GuzzleException|TransformResponseException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \R3bers\BittrexApi\Exception\TransformResponseException
      */
-    public function sellLimit(string $market, float $quantity, float $rate, bool $useAwards = false): array
+    public function sellLimit(string $marketSymbol, float $quantity, float $limit, bool $useAwards = false): array
     {
-        $options = $this->limitOrder('SELL', $market, $quantity, $rate, $useAwards);
+        $this->marketSymbol = $marketSymbol;
+        $this->quantity = $quantity;
+        $this->limit = $limit;
+        $this->useAwards = $useAwards;
+        $options = $this->limitOrder('SELL');
         return $this->rest('POST', '/orders', $options);
     }
 

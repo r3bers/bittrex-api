@@ -22,14 +22,17 @@ class ResponseTransformer
     public function transform(ResponseInterface $response, ?bool $needSequence = null): array
     {
         $body = (string)$response->getBody();
-        if (strpos($response->getHeaderLine('Content-Type'), 'application/json') === 0) {
-            $content = json_decode($body, true);
-            if ($needSequence)
-                $content = array_merge($content, $this->transformHeader($response));
-            if (json_last_error() != JSON_ERROR_NONE )
-                throw new TransformResponseException('Error transforming response to array. JSON_ERROR: ' . json_last_error());
-        } else
+
+        if (!(strpos($response->getHeaderLine('Content-Type'), 'application/json') === 0))
             throw new TransformResponseException('Error transforming response to array. Content-Type is not application/json');
+
+        $content = json_decode($body, true);
+        if (json_last_error() != JSON_ERROR_NONE)
+            throw new TransformResponseException('Error transforming response to array. JSON_ERROR: ' . json_last_error());
+
+        if ($needSequence)
+            $content = array_merge($content, $this->transformHeader($response));
+
         return $content;
     }
 

@@ -25,10 +25,10 @@
         "php": ">=7.4",
         "ext-json": "*",
         "ext-ds": "*",
-        "guzzlehttp/guzzle": "^7.0"
+        "guzzlehttp/guzzle": "^7.3"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.2"
+        "phpunit/phpunit": "^9.4"
     },
     "autoload": {
         "psr-4": { "R3bers\\BittrexApi\\": "src/" }
